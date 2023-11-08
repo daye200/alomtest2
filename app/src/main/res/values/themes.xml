@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Alomtest" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#4E57E4</item>
+        <item name ="colorPrimaryVariant">#B6B6FF</item>
+    </style>
+
+    <style name="Theme.Alomtest" parent="Base.Theme.Alomtest" />
+</resources>
