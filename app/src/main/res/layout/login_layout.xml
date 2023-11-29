@@ -17,6 +17,7 @@
         app:layout_constraintVertical_bias="0.376"/>
 
     <EditText
+        android:id="@+id/loginemail"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:ems="10"
@@ -72,6 +73,7 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:ems="10"
+        android:id="@+id/loginpassword"
         android:textSize="20dp"
         android:background="@null"
         android:inputType="textPassword"
@@ -126,6 +128,7 @@
     <Button
         android:layout_width="180dp"
         android:text="Log In"
+        android:id="@+id/loginbutton"
         android:textColor="#6D7F00"
         android:layout_height="wrap_content"
         android:background="@drawable/button_sample2"
