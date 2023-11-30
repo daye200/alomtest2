@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/rv_profile"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         tools:listitem="@layout/item_layout"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

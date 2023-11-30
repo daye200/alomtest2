@@ -15,7 +15,6 @@ import java.time.LocalDate
 class exercise : Fragment() {
     private var _binding: FragmentExerciseBinding? = null
     private val binding get() = _binding!!
-    val localDate: LocalDate = LocalDate.now()
     private lateinit var recyclerView: RecyclerView
     private lateinit var dataList:ArrayList<DataClass>
     lateinit var imageList:Array<Int>
