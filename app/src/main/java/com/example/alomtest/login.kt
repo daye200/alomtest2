@@ -1,30 +1,13 @@
 package com.example.alomtest
 
-import android.content.Context.MODE_PRIVATE
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import retrofit2.Call
-import retrofit2.Callback
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.annotations.SerializedName
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import com.example.alomtest.databinding.FirstLayoutBinding
+import androidx.appcompat.app.AppCompatActivity
 import com.example.alomtest.databinding.LoginLayoutBinding
+import retrofit2.Callback
 import retrofit2.Response
-
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.POST
 
 class login : AppCompatActivity() {
     lateinit var binding: LoginLayoutBinding
@@ -42,6 +25,7 @@ class login : AppCompatActivity() {
             // == 백엔드 통신 부분 ==
             val api = Api.create()//
             val data = UserModel(id, pw)
+
 
             api.userLogin(data).enqueue(object : Callback<LoginBackendResponse> {
                 override fun onResponse(

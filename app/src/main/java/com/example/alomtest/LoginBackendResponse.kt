@@ -5,9 +5,9 @@ data class UserModel(
     var pw : String ?= null
 )
 data class LoginBackendResponse(
-    val code: Int,
-    val error: String,
-    val message: String,
-    val status: Int,
-    val timestamp: String
+    val code: Int=0,
+    val error: String="",
+    val message: String="",
+    val status: Int=0,
+    val timestamp: String=""
 )

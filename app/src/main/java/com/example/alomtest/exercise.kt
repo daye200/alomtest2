@@ -61,9 +61,10 @@ class exercise : Fragment() {
 
     private fun getData(){
         for(i in imageList.indices){
-            val dataClass = DataClass(imageList[i],titleList[i])
+            val dataClass = DataClass(titleList[i])
             dataList.add(dataClass)
         }
         recyclerView.adapter = AdapterClass(dataList)
     }
+
 }
