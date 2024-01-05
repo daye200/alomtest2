@@ -16,7 +16,7 @@
         android:background="@drawable/food_item">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/footerImageView"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:adjustViewBounds="true"

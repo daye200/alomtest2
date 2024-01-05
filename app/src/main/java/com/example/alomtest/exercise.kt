@@ -50,7 +50,7 @@ class exercise : Fragment() {
             "기타 다른운동"
         )
 
-        recyclerView = view.findViewById(R.id.rv_profile)
+        recyclerView = view.findViewById(R.id.rv_food)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(true)
         dataList = arrayListOf<DataClass>()
@@ -60,7 +60,7 @@ class exercise : Fragment() {
     }
 
     private fun getData(){
-        for(i in imageList.indices){
+        for(i in titleList.indices){
             val dataClass = DataClass(titleList[i])
             dataList.add(dataClass)
         }

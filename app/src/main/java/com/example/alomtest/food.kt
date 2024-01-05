@@ -1,14 +1,14 @@
 package com.example.alomtest
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.databinding.FragmentFoodBinding
-import com.example.alomtest.databinding.FragmentSettingsBinding
 
 
 class food : Fragment() {
@@ -22,10 +22,9 @@ class food : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
         titleList = arrayOf(
             "헬스",
@@ -37,7 +36,7 @@ class food : Fragment() {
             "기타 다른운동"
         )
 
-        recyclerView = view.findViewById(R.id.rv_profile)
+        recyclerView = view.findViewById(R.id.rv_food)
         recyclerView.layoutManager = LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
         recyclerView.setHasFixedSize(true)
         dataList = arrayListOf<DataClass>()

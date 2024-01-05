@@ -16,16 +16,17 @@
 
 
         <TextView
+            android:id="@+id/food_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/exer"
-            android:text="Boxing"
-            android:textSize="16sp"
-            android:textColor="@color/black"
             android:layout_marginTop="20dp"
-            app:layout_constraintStart_toEndOf="@+id/image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:text="Boxing"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

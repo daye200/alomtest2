@@ -1,5 +1,6 @@
 package com.example.alomtest
 
+import android.content.Intent
 import android.os.Bundle
 import retrofit2.Call
 import android.util.Log
@@ -15,6 +16,11 @@ class login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = LoginLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.loginforget.setOnClickListener {
+            val intent = Intent(this,FindpasswordActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         binding.loginbutton.setOnClickListener {
             val id = binding.loginemail.text.toString().trim()//trim : 문자열 공백제거
