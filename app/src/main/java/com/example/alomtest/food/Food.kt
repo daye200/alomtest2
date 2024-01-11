@@ -1,13 +1,16 @@
-package com.example.alomtest
+package com.example.alomtest.food
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alomtest.R
 import com.example.alomtest.databinding.FragmentFoodBinding
 
 
@@ -17,9 +20,14 @@ class food : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var dataList:ArrayList<DataClass>
     lateinit var titleList:Array<String>
+    private lateinit var adapter: AdapterClass
+
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFoodBinding.inflate(inflater,container,false)
         return binding.root
+
     }
 
 
@@ -27,13 +35,7 @@ class food : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         titleList = arrayOf(
-            "헬스",
-            "복싱",
-            "필라테스",
-            "달리기",
-            "수영",
-            "등산",
-            "기타 다른운동"
+
         )
 
         recyclerView = view.findViewById(R.id.rv_food)
@@ -42,12 +44,54 @@ class food : Fragment() {
         dataList = arrayListOf<DataClass>()
         getData()
 
+        adapter = AdapterClass(dataList)
+        recyclerView.adapter = adapter
+
+        adapter.setOnItemClickListener(object : AdapterClass.OnItemClickListener {
+            override fun onItemClick(position:Int){
+
+                Log.d("position",position.toString())
+                Log.d("adapter",(adapter.itemCount-1).toString())
+
+                if(position == adapter.itemCount-1){
+                    val intent = Intent(requireContext(), AddActivity::class.java)
+                    requestLauncher.launch(intent)
+                }
+            }
+        }
+        )
+
     }
+
+    override fun onResume() {
+        super.onResume()
+
+
+    }
+//before
+    private val requestLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
+            if(result.resultCode== AddActivity.RESULT_ADD_TASK){
+                val newTask = result.data?.getStringExtra("newTask")
+                newTask?.let{
+                    dataList.add(DataClass(it))
+                    adapter.notifyItemInserted(dataList.size-1)
+                }
+            }
+        }
+
+
+//
 
     private fun getData(){
         for(i in titleList.indices){
             val dataClass = DataClass(titleList[i])
             dataList.add(dataClass)
         }
-        recyclerView.adapter = AdapterClass(dataList)
-    }}
+    }
+
+    override fun onDestroyView(){
+        super.onDestroyView()
+        _binding = null
+
+    }    }

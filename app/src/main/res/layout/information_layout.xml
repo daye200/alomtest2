@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#6A73FF">
     <ImageView
-        android:id="@+id/imageView"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/tree"
@@ -34,7 +34,7 @@
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_sample2"
-        android:text="Next"
+        android:text="다음"
         android:textColor="#6D7F00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

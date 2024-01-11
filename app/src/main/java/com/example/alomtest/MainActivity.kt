@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.alomtest.databinding.ActivityMainBinding
+import com.example.alomtest.food.food
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding

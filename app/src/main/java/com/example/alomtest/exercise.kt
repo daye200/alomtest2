@@ -1,7 +1,6 @@
 package com.example.alomtest
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.databinding.FragmentExerciseBinding
-import com.example.alomtest.databinding.FragmentHomeBinding
-import java.time.LocalDate
+import com.example.alomtest.food.AdapterClass
+import com.example.alomtest.food.DataClass
 
 class exercise : Fragment() {
     private var _binding: FragmentExerciseBinding? = null

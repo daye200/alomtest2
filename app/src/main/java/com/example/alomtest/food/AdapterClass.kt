@@ -1,4 +1,4 @@
-package com.example.alomtest
+package com.example.alomtest.food
 
 import android.content.Context
 import android.content.Intent
@@ -8,17 +8,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.NonDisposableHandle
-import kotlinx.coroutines.NonDisposableHandle.parent
-import org.w3c.dom.Text
+import com.example.alomtest.R
 
 
 class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     val ITEM =0
     val FOOTER=1
+    interface OnItemClickListener{
+        fun onItemClick(position:Int)
+    }
+    private var itemClickListener: OnItemClickListener?=null
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType){
-            ITEM ->{val itemView=LayoutInflater.from(parent.context).inflate(R.layout.item_layout,
+            ITEM ->{val itemView=LayoutInflater.from(parent.context).inflate(
+                R.layout.item_layout,
                 parent, false)
                 ViewHolderClass(itemView)
             }
@@ -29,16 +34,33 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
 
             }
         }
+    fun setOnItemClickListener(listener: OnItemClickListener){
+        this.itemClickListener = listener
+    }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)){
             ITEM->{
                 val itemViewHolder = holder as ViewHolderClass
 
-                itemViewHolder.bind(dataList[position])
+               itemViewHolder.bind(dataList[position])
+               itemViewHolder.itemView.setOnClickListener {
+                  itemClickListener?.onItemClick(position)
+                   val context = it.context
+                   val dataTitle = dataList[position].dataTitle
+
+
+                   // 커스텀 다이얼로그 표시
+                   val customDialog = Food_dialog(context, dataTitle)
+                   customDialog.show()
+               }
+
 
             }
-            FOOTER->{val FooterViewHolder = holder as FooterViewHolderClass
-            FooterViewHolder.bindFooterData()}
+            FOOTER->{val footerViewHolder = holder as FooterViewHolderClass
+            footerViewHolder.bindFooterData()
+                footerViewHolder.itemView.setOnClickListener {
+                    itemClickListener?.onItemClick(dataList.size)
+                }}
 
 
 
@@ -47,7 +69,7 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
     }
 
     override fun getItemCount(): Int {
-        return dataList.size +1
+        return dataList.size+1
     }
     override fun getItemViewType(position: Int): Int {
         return if (position < dataList.size) ITEM else FOOTER
@@ -61,6 +83,7 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
             itemView.setOnClickListener {
                 // Footer를 클릭했을 때 다른 화면으로 이동하는 코드
                 val intent = Intent(context, AddActivity::class.java)
+
                 context.startActivity(intent)
             }
         }

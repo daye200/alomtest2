@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,7 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Alomtest"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".food.Food_dialog"
+            android:exported="false" />
+        <activity
+            android:name=".first"
+            android:exported="false" />
         <activity
             android:name=".FindpasswordActivity"
             android:exported="false" />
@@ -30,7 +36,7 @@
             android:name=".Api"
             android:exported="false" />
         <activity
-            android:name=".AddActivity"
+            android:name=".food.AddActivity"
             android:exported="false" />
 
         <uses-library
@@ -38,7 +44,7 @@
             android:required="false" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Finish"
             android:exported="false" />
         <activity
             android:name=".account"
@@ -50,8 +56,8 @@
             android:name=".Settings"
             android:exported="false" />
         <activity
-            android:name=".first"
-            android:exported="true" >
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
