@@ -5,21 +5,25 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
 import com.example.alomtest.databinding.ActivityAddBinding
 import com.example.alomtest.food.AddActivity.Companion.RESULT_ADD_TASK
+import com.example.sharedpreference.SwipeGesture
 
 import com.google.android.material.card.MaterialCardView
 import java.util.Locale
@@ -45,7 +49,11 @@ class AddActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = ActivityAddBinding.inflate(layoutInflater)
+
         setContentView(R.layout.activity_add)
+
         cardView = binding.materialCardView
         recyclerView = binding.recyclerView
         searchView = binding.searchView
@@ -70,7 +78,8 @@ class AddActivity : AppCompatActivity() {
             }
         })
 
-        findViewById<Button>(R.id.add_next).setOnClickListener{
+   findViewById<Button>(R.id.add_next).setOnClickListener{
+//        binding.addNext.setOnClickListener {
             val newTask = findViewById<EditText>(R.id.add_edit).text.toString()
 
             val resultintent = Intent(this, food::class.java)
@@ -79,7 +88,11 @@ class AddActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.expandBtn.setOnClickListener {
+//       binding.expandBtn.setOnClickListener {
+   findViewById<Button>(R.id.expandBtn).setOnClickListener {
+       Log.d("toggle", "expandBtn 클릭됨")
+       Log.d("ImageView", "imageView1 is null: ${imageView1 == null}")
+       runOnUiThread {
             toggleImage()
 
             if (expandableLayout.visibility == View.GONE) {
@@ -89,9 +102,10 @@ class AddActivity : AppCompatActivity() {
                 expandableLayout.visibility = View.GONE
                 cardView.visibility = View.GONE
             }
-        }
+        }}
 
-        binding.expandBtn2.setOnClickListener {
+//  binding.expandBtn2.setOnClickListener {
+        findViewById<Button>(R.id.expandBtn2).setOnClickListener {
             if (expandableLayout2.visibility == View.GONE) {
                 expandableLayout2.visibility = View.VISIBLE
                 cardView.visibility = View.VISIBLE
@@ -139,26 +153,34 @@ class AddActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun toggleImage() {
+        Log.d("toggle","함수출력")
         if (isImage1Visible) {
-            imageView1.setImageDrawable(getDrawable(R.drawable.group_124))
+            imageView1.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.group_124))
+            Log.d("toggle","이미지1로 변경")
 
         } else {
-            imageView1.setImageDrawable(getDrawable(R.drawable.group_126))
+            imageView1.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.group_126))
+            Log.d("toggle","이미지2로 변경")
         }
 
         isImage1Visible = !isImage1Visible
+        imageView1.invalidate()
     }
 
     private fun deleteData(){
 
-        val swipeGesture = object : SwipeGesture(this@AddActivity){
-            override fun onSwipeLeft(viewHolder: RecyclerView.ViewHolder) {
-                adapter.deleteItem(viewHolder.absoluteAdapterPosition)
-        }
+        val swipegesture = object : SwipeGesture(this){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction:Int){
+                when(direction){
+                    ItemTouchHelper.LEFT ->{
+                        adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                    }
+                }
+            }
         }
 
-        val touchHelper = ItemTouchHelper(swipeGesture)
-        touchHelper.attachToRecyclerView(recyclerView)
+        val touchHelper = ItemTouchHelper(swipegesture)
+        touchHelper.attachToRecyclerView((recyclerView))
     }
 
     override fun onPause() {
@@ -170,6 +192,4 @@ class AddActivity : AppCompatActivity() {
         super.onResume()
         adapter.loadData(this)
     }
-
-
-        }
+}
