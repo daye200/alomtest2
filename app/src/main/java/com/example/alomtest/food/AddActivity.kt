@@ -56,32 +56,36 @@ class AddActivity : AppCompatActivity() {
 
         cardView = findViewById(R.id.materialCardView)
         recyclerView = findViewById(R.id.recyclerViewfood2)
-        searchView = binding.searchView
+        searchView = findViewById(R.id.searchViewfood)
         expandableLayout = binding.expandableLayout
         expandableLayout2 = binding.expandableLayout2
         expandBtn = binding.expandBtn
         imageView1 = findViewById(R.id.foodimageView)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this@AddActivity)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = FoodAdapter(mList)
         recyclerView.adapter = adapter
 
 
 
         addDataToList()
+        if (searchView!=null){
+            Log.d("searchView","실험")
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d("searchview","실험1")
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d("searchview","실험2")
                 filterList(newText)
                 return true
             }
-        })
+        })}
 
    findViewById<Button>(R.id.add_next).setOnClickListener{
-//        binding.addNext.setOnClickListener {
+
             val newTask = findViewById<EditText>(R.id.add_edit).text.toString()
 
             val resultintent = Intent(this, food::class.java)
@@ -92,7 +96,7 @@ class AddActivity : AppCompatActivity() {
         expandableLayout.visibility = View.GONE // 초기에 화면에 보이지 않도록 설정
         cardView.visibility = View.GONE
 
-//       binding.expandBtn.setOnClickListener {
+
    findViewById<Button>(R.id.expandBtn).setOnClickListener {
        runOnUiThread {
             toggleImage()
@@ -108,7 +112,6 @@ class AddActivity : AppCompatActivity() {
             }
         }}
 
-//  binding.expandBtn2.setOnClickListener {
         findViewById<Button>(R.id.expandBtn2).setOnClickListener {
             if (expandableLayout2.visibility == View.GONE) {
                 expandableLayout2.visibility = View.VISIBLE
@@ -125,15 +128,19 @@ class AddActivity : AppCompatActivity() {
 
     private fun filterList(query: String?) {
         if (query != null) {
+            Log.d("filterList","실험5")
             val filteredList = ArrayList<FoodData>()
             for (i in mList) {
                 if (i.title.lowercase(Locale.ROOT).contains(query)) {
                     filteredList.add(i)
+                    Log.d("filterList","실험6")
                 }
             }
             if (filteredList.isEmpty()) {
+                Log.d("filterList","실험7")
                 Toast.makeText(this, "검색 결과 없음", Toast.LENGTH_SHORT).show()
             } else {
+                Log.d("filterList","실험8")
                 adapter.setFilteredList(filteredList)
             }
         }

@@ -30,7 +30,6 @@ fun setFilteredList(filteredData: List<FoodData>) {
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
-        Log.d("FoodAdapter", "Binding item at position $position")
         holder.titleTv.text = mList[position].title
 
     }
