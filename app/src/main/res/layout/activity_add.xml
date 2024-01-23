@@ -71,7 +71,8 @@
         android:background="@android:color/transparent"
         android:fontFamily="@font/medium"
         android:gravity="start|center_vertical"
-        android:text="    선택하기"
+        android:text="선택하기"
+        android:paddingLeft="15dp"
         android:textColor="#747CFF"
         android:textSize="14dp"
         android:clickable="true"/>
@@ -169,11 +170,13 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/recyclerViewfood2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#B9BDFF"
-                android:padding="8dp" />
+                android:paddingLeft="15dp"
+                tools:listitem="@layout/item"
+                />
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -197,8 +200,9 @@
         android:layout_marginBottom="25dp"
         android:background="@drawable/rectangle_133"
         android:ems="10"
+        android:paddingLeft="15dp"
         android:fontFamily="@font/medium"
-        android:hint="    0g"
+        android:hint="0g"
         android:inputType="text"
         android:textColor="#747CFF"
         android:textSize="12sp" />

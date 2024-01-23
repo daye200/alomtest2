@@ -54,17 +54,19 @@ class AddActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_add)
 
-        cardView = binding.materialCardView
-        recyclerView = binding.recyclerView
+        cardView = findViewById(R.id.materialCardView)
+        recyclerView = findViewById(R.id.recyclerViewfood2)
         searchView = binding.searchView
         expandableLayout = binding.expandableLayout
         expandableLayout2 = binding.expandableLayout2
         expandBtn = binding.expandBtn
-        imageView1 = binding.foodimageView
+        imageView1 = findViewById(R.id.foodimageView)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this@AddActivity)
         adapter = FoodAdapter(mList)
         recyclerView.adapter = adapter
+
+
 
         addDataToList()
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -87,20 +89,22 @@ class AddActivity : AppCompatActivity() {
             setResult(RESULT_ADD_TASK, resultintent)
             finish()
         }
+        expandableLayout.visibility = View.GONE // 초기에 화면에 보이지 않도록 설정
+        cardView.visibility = View.GONE
 
 //       binding.expandBtn.setOnClickListener {
    findViewById<Button>(R.id.expandBtn).setOnClickListener {
-       Log.d("toggle", "expandBtn 클릭됨")
-       Log.d("ImageView", "imageView1 is null: ${imageView1 == null}")
        runOnUiThread {
             toggleImage()
 
             if (expandableLayout.visibility == View.GONE) {
                 expandableLayout.visibility = View.VISIBLE
                 cardView.visibility = View.VISIBLE
+
             } else {
                 expandableLayout.visibility = View.GONE
                 cardView.visibility = View.GONE
+
             }
         }}
 
@@ -149,21 +153,23 @@ class AddActivity : AppCompatActivity() {
 
         // 새로운 음식을 현재 리스트의 다음 위치에 추가
         mList.add(nextPosition, FoodData("새로운음식"))
+        adapter.notifyDataSetChanged()
+
     }
 
+
     @RequiresApi(Build.VERSION_CODES.M)
+
     private fun toggleImage() {
-        Log.d("toggle","함수출력")
         if (isImage1Visible) {
             imageView1.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.group_124))
-            Log.d("toggle","이미지1로 변경")
 
         } else {
             imageView1.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.group_126))
-            Log.d("toggle","이미지2로 변경")
         }
 
         isImage1Visible = !isImage1Visible
+        imageView1.requestLayout()
         imageView1.invalidate()
     }
 
@@ -183,6 +189,7 @@ class AddActivity : AppCompatActivity() {
         touchHelper.attachToRecyclerView((recyclerView))
     }
 
+
     override fun onPause() {
         super.onPause()
         adapter.saveData(this)
@@ -192,4 +199,7 @@ class AddActivity : AppCompatActivity() {
         super.onResume()
         adapter.loadData(this)
     }
+
+
+
 }
