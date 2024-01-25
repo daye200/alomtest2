@@ -14,15 +14,27 @@ class FoodAdapter(private var mList : MutableList<FoodData>) :
 
     inner class FoodViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val titleTv : TextView = itemView.findViewById(R.id.titleTv)
+        fun bind(data: FoodData){
+            titleTv.text = data.title
+        }
     }
+    //class ViewHolderClass(itemView: View):RecyclerView.ViewHolder(itemView) {
+        //private val rvTitle: TextView = itemView.findViewById(R.id.food_text)
+      //  fun bind(data: DataClass){
+        //    rvTitle.text = data.dataTitle
+      //  }
 
-//    fun setFilteredList(mList: List<FoodData>){
-//        this.mList = mList.toMutableList()
-//        notifyDataSetChanged()
-//    }
+   // }
+   interface OnItemClickListener{
+       fun onItemClick(position:Int)
+   }
+   private var itemClickListener: FoodAdapter.OnItemClickListener?=null
+   fun setOnItemClickListener(listener: FoodAdapter.OnItemClickListener){
+       this.itemClickListener = listener
+   }
+
+
 fun setFilteredList(mList: List<FoodData>) {
-//    mList.clear()
-//    mList.addAll(filteredData)
     this.mList = mList.toMutableList()
     notifyDataSetChanged()
 }
@@ -32,9 +44,15 @@ fun setFilteredList(mList: List<FoodData>) {
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
-        holder.titleTv.text = mList[position].title
+        val data = mList[position]
+        holder.bind(data)
 
-    }
+        holder.itemView.setOnClickListener {
+            itemClickListener?.onItemClick(position)
+
+
+    }}
+
 
     override fun getItemCount(): Int {
         return mList.size
@@ -45,7 +63,7 @@ fun setFilteredList(mList: List<FoodData>) {
     fun deleteItem(i : Int){
         mList.removeAt(i)
         notifyDataSetChanged()
-    }
+    }}
 
 //    fun saveData(context: Context) {
 //        val preferences = context.getSharedPreferences("food_data", Context.MODE_PRIVATE)
@@ -62,4 +80,4 @@ fun setFilteredList(mList: List<FoodData>) {
 //        notifyDataSetChanged()
 //    }
 
-}
+//}
