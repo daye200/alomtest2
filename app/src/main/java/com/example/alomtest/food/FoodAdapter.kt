@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
 
-class FoodAdapter(private var mList : MutableList<FoodData>) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>(){
+class FoodAdapter(private var mList : MutableList<FoodData>) :
+    RecyclerView.Adapter<FoodAdapter.FoodViewHolder>(){
 
 
     inner class FoodViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
@@ -19,9 +20,10 @@ class FoodAdapter(private var mList : MutableList<FoodData>) : RecyclerView.Adap
 //        this.mList = mList.toMutableList()
 //        notifyDataSetChanged()
 //    }
-fun setFilteredList(filteredData: List<FoodData>) {
-    mList.clear()
-    mList.addAll(filteredData)
+fun setFilteredList(mList: List<FoodData>) {
+//    mList.clear()
+//    mList.addAll(filteredData)
+    this.mList = mList.toMutableList()
     notifyDataSetChanged()
 }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
@@ -45,19 +47,19 @@ fun setFilteredList(filteredData: List<FoodData>) {
         notifyDataSetChanged()
     }
 
-    fun saveData(context: Context) {
-        val preferences = context.getSharedPreferences("food_data", Context.MODE_PRIVATE)
-        val editor = preferences.edit()
-        val jsonStringList = mList.map { it.toJsonString()}
-        editor.putStringSet("food_list", jsonStringList.toSet())
-        editor.apply()
-    }
-
-    fun loadData(context: Context) {
-        val preferences = context.getSharedPreferences("food_data", Context.MODE_PRIVATE)
-        val jsonStringList = preferences.getStringSet("food_list", emptySet())
-        mList = jsonStringList?.map { FoodData.fromString(it) }?.toMutableList() ?: mutableListOf()
-        notifyDataSetChanged()
-    }
+//    fun saveData(context: Context) {
+//        val preferences = context.getSharedPreferences("food_data", Context.MODE_PRIVATE)
+//        val editor = preferences.edit()
+//        val jsonStringList = mList.map { it.toJsonString()}
+//        editor.putStringSet("food_list", jsonStringList.toSet())
+//        editor.apply()
+//    }
+//
+//    fun loadData(context: Context) {
+//        val preferences = context.getSharedPreferences("food_data", Context.MODE_PRIVATE)
+//        val jsonStringList = preferences.getStringSet("food_list", emptySet())
+//        mList = jsonStringList?.map { FoodData.fromString(it) }?.toMutableList() ?: mutableListOf()
+//        notifyDataSetChanged()
+//    }
 
 }

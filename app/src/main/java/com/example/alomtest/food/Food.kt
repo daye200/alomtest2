@@ -50,9 +50,6 @@ class food : Fragment() {
         adapter.setOnItemClickListener(object : AdapterClass.OnItemClickListener {
             override fun onItemClick(position:Int){
 
-                Log.d("position",position.toString())
-                Log.d("adapter",(adapter.itemCount-1).toString())
-
                 if(position == adapter.itemCount-1){
                     val intent = Intent(requireContext(), AddActivity::class.java)
                     requestLauncher.launch(intent)

@@ -62,7 +62,9 @@ class AddActivity : AppCompatActivity() {
         expandBtn = binding.expandBtn
         imageView1 = findViewById(R.id.foodimageView)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+        val linearLayoutManager = LinearLayoutManager(this)
+        findViewById<RecyclerView>(R.id.recyclerViewfood2).layoutManager = linearLayoutManager
         adapter = FoodAdapter(mList)
         recyclerView.adapter = adapter
 
@@ -70,15 +72,12 @@ class AddActivity : AppCompatActivity() {
 
         addDataToList()
         if (searchView!=null){
-            Log.d("searchView","실험")
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("searchview","실험1")
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                Log.d("searchview","실험2")
                 filterList(newText)
                 return true
             }
@@ -126,25 +125,7 @@ class AddActivity : AppCompatActivity() {
 
     }
 
-    private fun filterList(query: String?) {
-        if (query != null) {
-            Log.d("filterList","실험5")
-            val filteredList = ArrayList<FoodData>()
-            for (i in mList) {
-                if (i.title.lowercase(Locale.ROOT).contains(query)) {
-                    filteredList.add(i)
-                    Log.d("filterList","실험6")
-                }
-            }
-            if (filteredList.isEmpty()) {
-                Log.d("filterList","실험7")
-                Toast.makeText(this, "검색 결과 없음", Toast.LENGTH_SHORT).show()
-            } else {
-                Log.d("filterList","실험8")
-                adapter.setFilteredList(filteredList)
-            }
-        }
-    }
+
 
     private fun addDataToList() {
         val nextPosition = mList.size // 다음 위치는 현재 리스트의 크기와 같습니다.
@@ -162,7 +143,24 @@ class AddActivity : AppCompatActivity() {
         mList.add(nextPosition, FoodData("새로운음식"))
         adapter.notifyDataSetChanged()
 
+
     }
+private fun filterList(query: String?) {
+        if (query !=null) {
+          val filteredList = ArrayList<FoodData>()
+
+            for (i in mList) {
+                if (i.title.lowercase(Locale.ROOT).contains(query)) {
+                    filteredList.add(i)
+                }
+            }
+            if (filteredList.isEmpty()) {
+                Toast.makeText(this, "검색 결과 없음", Toast.LENGTH_SHORT).show()
+            } else {
+                adapter.setFilteredList(filteredList)
+            }
+        }
+        }
 
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -197,15 +195,15 @@ class AddActivity : AppCompatActivity() {
     }
 
 
-    override fun onPause() {
-        super.onPause()
-        adapter.saveData(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        adapter.loadData(this)
-    }
+//    override fun onPause() {
+//        super.onPause()
+//        adapter.saveData(this)
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        adapter.loadData(this)
+//    }
 
 
 

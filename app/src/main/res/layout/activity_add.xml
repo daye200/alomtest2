@@ -122,7 +122,6 @@
                         android:background="#EDEEFF"
                         android:iconifiedByDefault="false"
                         app:queryBackground="@android:color/transparent"
-                        android:foreground="@drawable/search"
                         tools:layout_editor_absoluteX="116dp"
                         tools:layout_editor_absoluteY="73dp" />
 
