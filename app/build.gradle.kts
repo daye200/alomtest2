@@ -52,6 +52,8 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
     //cardView
     implementation ("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
     //삭제
     testImplementation ("junit:junit:4.+")
     implementation("it.xabaras.android:recyclerview-swipedecorator:1.4")

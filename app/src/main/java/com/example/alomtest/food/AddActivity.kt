@@ -2,10 +2,7 @@ package com.example.alomtest.food
 
 import android.widget.SearchView
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,12 +20,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
 import com.example.alomtest.databinding.ActivityAddBinding
 import com.example.alomtest.food.AddActivity.Companion.RESULT_ADD_TASK
+import com.example.alomtest.food.Api
+import com.example.alomtest.retrofit.food_list
 import com.example.sharedpreference.SwipeGesture
 
 import com.google.android.material.card.MaterialCardView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.Locale
 
 class AddActivity : AppCompatActivity() {
+    private lateinit var food:ArrayList<food_list>
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
     private lateinit var cardView : MaterialCardView
@@ -67,6 +70,42 @@ class AddActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.recyclerViewfood2).layoutManager = linearLayoutManager
         adapter = FoodAdapter(mList)
         recyclerView.adapter = adapter
+
+        //
+        val api = Api.create()
+
+
+        api.load_food(/*accessToken = "Bearer $usertoken"*/)
+            .enqueue(object: Callback<ArrayList<food_list>>{
+                override fun onResponse(
+                    call: Call<ArrayList<food_list>>,
+                    response: Response<ArrayList<food_list>>
+                ) {
+                    val total_food_List = response.body()
+                    Log.d("reponsecode",response.code().toString())
+
+                    when(response.code()){
+                        200->{
+                            if(total_food_List != null){
+                                for(i:Int in 0 until total_food_List.size){
+                                    food.add(total_food_List[i])
+                                }
+                            }
+                            Log.d("success","성공")
+                        }
+                        else->{
+                            Log.d("error","error")
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<food_list>>, t: Throwable) {
+                    Log.d("통신실패",t.message.toString())
+                    Log.d("통신실패","fail")
+                }
+
+            })
 
 
 
@@ -121,9 +160,29 @@ class AddActivity : AppCompatActivity() {
         }
 
         deleteData()
+        fun toggleExpandableLayout(clickedItemTitle: String) {
+
+            //text를 foodname으로 바꾸는 함수
+
+        }
+
+        // 리스트 아이템 클릭 이벤트 처리
+        adapter.setOnItemClickListener { foodname ->
+            // name: 클릭된 이름
+            toggleExpandableLayout(foodname)
+
+            if (expandableLayout.visibility == View.GONE) {
+                print("$foodname")
+                expandableLayout.visibility = View.VISIBLE
+                cardView.visibility = View.VISIBLE
+            } else {
+                print("$foodname")
+                expandableLayout.visibility = View.GONE
+                cardView.visibility = View.GONE
+            }
 
 
-    }
+    }}
 
 
 
@@ -146,21 +205,21 @@ class AddActivity : AppCompatActivity() {
 
     }
 private fun filterList(query: String?) {
-        if (query !=null) {
-          val filteredList = ArrayList<FoodData>()
+    if (query != null) {
+        val filteredList = ArrayList<FoodData>()
 
-            for (i in mList) {
-                if (i.title.lowercase(Locale.ROOT).contains(query)) {
-                    filteredList.add(i)
-                }
-            }
-            if (filteredList.isEmpty()) {
-                Toast.makeText(this, "검색 결과 없음", Toast.LENGTH_SHORT).show()
-            } else {
-                adapter.setFilteredList(filteredList)
+        for (i in mList) {
+            if (i.title.lowercase(Locale.ROOT).contains(query)) {
+                filteredList.add(i)
             }
         }
+        if (filteredList.isEmpty()) {
+            Toast.makeText(this, "검색 결과 없음", Toast.LENGTH_SHORT).show()
+        } else {
+            adapter.setFilteredList(filteredList)
         }
+    }
+}
 
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -207,4 +266,31 @@ private fun filterList(query: String?) {
 
 
 
+
+       // fun getgramFromEditText(): Int {
+        //    val gramText = gramEditText.text.toString()
+         //   return if (gramText.isNotEmpty()) {
+         //       gramText.toInt()
+          //  } else {
+                // 기본값 또는 에러 처리를 원하는 대로 설정
+         //       0
+         //   }
+      //  }
+
+       // fun getTimeFromTimePicker(): String {
+       //     val hour = if (Build.VERSION.SDK_INT >= 23) {
+       //         timePicker.hour
+       //     } else {
+       //         timePicker.currentHour
+       //     }
+
+        //    val minute = if (Build.VERSION.SDK_INT >= 23) {
+        //        timePicker.minute
+        //    } else {
+        //        timePicker.currentMinute
+        //    }
+
+       //     // 시간을 원하는 형식으로 포맷팅
+       //     return String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
+      //  }
 }

@@ -18,6 +18,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".food.SharedPreferenceUtils"
+            android:exported="false"
+            android:label="@string/title_activity_shared_preference_utils"
+            android:theme="@style/Theme.Alomtest" />
+        <activity
+            android:name=".food.UserFoodClass"
+            android:exported="false" />
+        <activity
             android:name=".food.Food_dialog"
             android:exported="false" />
         <activity

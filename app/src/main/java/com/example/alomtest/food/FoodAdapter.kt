@@ -10,11 +10,21 @@ import com.example.alomtest.R
 
 class FoodAdapter(private var mList : MutableList<FoodData>) :
     RecyclerView.Adapter<FoodAdapter.FoodViewHolder>(){
+    private var onItemClickListener: ((String) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (String) -> Unit) {
+        onItemClickListener = listener
+    }
 
 
     inner class FoodViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val titleTv : TextView = itemView.findViewById(R.id.titleTv)
-    }
+        init {
+            // 아이템 뷰가 클릭되었을 때의 동작을 정의
+            itemView.setOnClickListener {
+                onItemClickListener?.invoke(mList[absoluteAdapterPosition].title)
+            }
+    }}
 
 //    fun setFilteredList(mList: List<FoodData>){
 //        this.mList = mList.toMutableList()
