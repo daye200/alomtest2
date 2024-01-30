@@ -20,8 +20,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
 import com.example.alomtest.databinding.ActivityAddBinding
 import com.example.alomtest.food.AddActivity.Companion.RESULT_ADD_TASK
-import com.example.alomtest.food.Api
-import com.example.alomtest.retrofit.food_list
 import com.example.sharedpreference.SwipeGesture
 
 import com.google.android.material.card.MaterialCardView
@@ -31,7 +29,6 @@ import retrofit2.Response
 import java.util.Locale
 
 class AddActivity : AppCompatActivity() {
-    private lateinit var food:ArrayList<food_list>
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
     private lateinit var cardView : MaterialCardView
@@ -71,41 +68,7 @@ class AddActivity : AppCompatActivity() {
         adapter = FoodAdapter(mList)
         recyclerView.adapter = adapter
 
-        //
-        val api = Api.create()
 
-
-        api.load_food(/*accessToken = "Bearer $usertoken"*/)
-            .enqueue(object: Callback<ArrayList<food_list>>{
-                override fun onResponse(
-                    call: Call<ArrayList<food_list>>,
-                    response: Response<ArrayList<food_list>>
-                ) {
-                    val total_food_List = response.body()
-                    Log.d("reponsecode",response.code().toString())
-
-                    when(response.code()){
-                        200->{
-                            if(total_food_List != null){
-                                for(i:Int in 0 until total_food_List.size){
-                                    food.add(total_food_List[i])
-                                }
-                            }
-                            Log.d("success","성공")
-                        }
-                        else->{
-                            Log.d("error","error")
-
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<ArrayList<food_list>>, t: Throwable) {
-                    Log.d("통신실패",t.message.toString())
-                    Log.d("통신실패","fail")
-                }
-
-            })
 
 
 

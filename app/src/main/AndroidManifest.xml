@@ -29,9 +29,6 @@
             android:name=".food.Food_dialog"
             android:exported="false" />
         <activity
-            android:name=".first"
-            android:exported="false" />
-        <activity
             android:name=".FindpasswordActivity"
             android:exported="false" />
         <activity
@@ -39,9 +36,6 @@
             android:exported="false" />
         <activity
             android:name=".PreferenceUtil"
-            android:exported="false" />
-        <activity
-            android:name=".Api"
             android:exported="false" />
         <activity
             android:name=".food.AddActivity"
@@ -52,13 +46,7 @@
             android:required="false" />
 
         <activity
-            android:name=".Finish"
-            android:exported="false" />
-        <activity
             android:name=".account"
-            android:exported="false" />
-        <activity
-            android:name=".login"
             android:exported="false" />
         <activity
             android:name=".Settings"
