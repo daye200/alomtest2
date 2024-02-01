@@ -18,15 +18,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".food.SharedPreferenceUtils"
+            android:name=".food.foodcustom01.SharedPreferenceUtils"
             android:exported="false"
             android:label="@string/title_activity_shared_preference_utils"
             android:theme="@style/Theme.Alomtest" />
         <activity
-            android:name=".food.UserFoodClass"
+            android:name=".food.foodcustom01.UserFoodClass"
             android:exported="false" />
         <activity
-            android:name=".food.Food_dialog"
+            android:name=".food.mainpage.Food_dialog"
             android:exported="false" />
         <activity
             android:name=".FindpasswordActivity"
@@ -38,7 +38,7 @@
             android:name=".PreferenceUtil"
             android:exported="false" />
         <activity
-            android:name=".food.AddActivity"
+            android:name=".food.foodcustom01.AddActivity"
             android:exported="false" />
 
         <uses-library

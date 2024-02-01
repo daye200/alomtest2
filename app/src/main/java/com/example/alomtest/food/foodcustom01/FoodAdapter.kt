@@ -1,6 +1,4 @@
-package com.example.alomtest.food
-import android.content.Context
-import android.util.Log
+package com.example.alomtest.food.foodcustom01
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

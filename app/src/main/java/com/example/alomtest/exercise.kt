@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.databinding.FragmentExerciseBinding
-import com.example.alomtest.food.AdapterClass
-import com.example.alomtest.food.DataClass
+import com.example.alomtest.food.mainpage.AdapterClass
+import com.example.alomtest.food.mainpage.DataClass
 
 class exercise : Fragment() {
     private var _binding: FragmentExerciseBinding? = null

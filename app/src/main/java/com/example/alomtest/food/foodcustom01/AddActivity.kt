@@ -1,4 +1,4 @@
-package com.example.alomtest.food
+package com.example.alomtest.food.foodcustom01
 
 import android.widget.SearchView
 import android.annotation.SuppressLint
@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -19,13 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
 import com.example.alomtest.databinding.ActivityAddBinding
-import com.example.alomtest.food.AddActivity.Companion.RESULT_ADD_TASK
-import com.example.sharedpreference.SwipeGesture
+import com.example.alomtest.food.mainpage.Food
 
 import com.google.android.material.card.MaterialCardView
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.Locale
 
 class AddActivity : AppCompatActivity() {
@@ -89,7 +84,7 @@ class AddActivity : AppCompatActivity() {
 
             val newTask = findViewById<EditText>(R.id.add_edit).text.toString()
 
-            val resultintent = Intent(this, food::class.java)
+            val resultintent = Intent(this, Food::class.java)
             resultintent.putExtra("newTask", newTask)
             setResult(RESULT_ADD_TASK, resultintent)
             finish()

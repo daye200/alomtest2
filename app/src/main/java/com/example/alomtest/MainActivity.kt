@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.alomtest.databinding.ActivityMainBinding
-import com.example.alomtest.food.food
+import com.example.alomtest.food.mainpage.Food
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.exercise -> replaceFragment(exercise())
-                R.id.food -> replaceFragment(food())
+                R.id.food -> replaceFragment(Food())
                 R.id.home -> replaceFragment(Home())
                 R.id.profile -> replaceFragment(Profile())
                 R.id.settings -> replaceFragment(Settings())

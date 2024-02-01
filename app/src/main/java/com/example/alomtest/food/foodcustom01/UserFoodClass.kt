@@ -1,9 +1,6 @@
-package com.example.alomtest.food
+package com.example.alomtest.food.foodcustom01
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.example.alomtest.R
 import org.json.JSONObject
 
 class UserFoodClass (context: Context) {

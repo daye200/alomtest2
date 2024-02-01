@@ -1,4 +1,4 @@
-package com.example.alomtest.food
+package com.example.alomtest.food.mainpage
 
 import android.content.Context
 import android.content.Intent
@@ -6,12 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemLongClickListener
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
+import com.example.alomtest.food.foodcustom01.AddActivity
 
 
 class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -23,9 +23,26 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
     interface OnItemLongClickListener {
         fun onItemLongClick(position: Int)
     }
+    interface OnDeleteClickListener {
+        fun onDeleteClick(position: Int)
+    }
     private var itemClickListener: OnItemClickListener?=null
-    private lateinit var adapter: AdapterClass
     private var itemLongClickListener: OnItemLongClickListener?=null
+    private var onDeleteClickListener: OnDeleteClickListener?=null
+
+   // private var adapter: AdapterClass?=null
+
+    fun removeItem(position: Int) {
+        if (position < dataList.size) {
+            Log.d("test","test2")
+            dataList.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, dataList.size)
+       }
+    }
+
+
+
 
 
 
@@ -48,6 +65,9 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
     }
     fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
         this.itemLongClickListener = listener
+    }
+    fun setOnDeleteClickListener(listener: OnDeleteClickListener) {
+        this.onDeleteClickListener = listener
     }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)){
@@ -111,24 +131,25 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
 
 
 
-    class ViewHolderClass(itemView: View):RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolderClass(itemView: View):RecyclerView.ViewHolder(itemView) {
         private val rvTitle: TextView = itemView.findViewById(R.id.food_text)
         private val buttonrevise: Button = itemView.findViewById(R.id.food_revisebutton) // 실제 버튼 ID로 대체하세요
         private val buttondelete: Button = itemView.findViewById(R.id.food_deletebutton)
 
-        /*init {
-            // itemView에 긴 클릭 리스너 추가
-            itemView.setOnLongClickListener {
-                // 버튼의 가시성을 토글
-                buttonrevise.visibility = if (buttonrevise.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-                // 어댑터에게 아이템이 변경되었음을 알림
-                (itemView.context as? RecyclerView)?.adapter?.notifyItemChanged(bindingAdapterPosition)
-                Log.d("test","testlongclick")
-                // 긴 클릭 이벤트 소비
-                true
 
+        init {
             // 다른 초기화 또는 클릭 리스너를 추가하세요
-        }*/
+
+            // 버튼 클릭 리스너 설정
+            buttondelete.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    // AdapterClass의 removeItem 메서드를 호출하여 아이템 삭제
+                    onDeleteClickListener?.onDeleteClick(position)
+
+                }
+            }
+        }
         fun bind(data: DataClass){
             rvTitle.text = data.dataTitle
             buttonrevise.visibility = View.GONE

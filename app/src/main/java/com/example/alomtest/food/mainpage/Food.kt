@@ -1,8 +1,7 @@
-package com.example.alomtest.food
+package com.example.alomtest.food.mainpage
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
 import com.example.alomtest.databinding.FragmentFoodBinding
+import com.example.alomtest.food.foodcustom01.AddActivity
 
 
-class food : Fragment() {
+class Food : Fragment() {
     private var _binding: FragmentFoodBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
@@ -45,7 +45,7 @@ class food : Fragment() {
         getData()
 
         adapter = AdapterClass(dataList)
-        recyclerView.adapter = adapter
+
 
         adapter.setOnItemClickListener(object : AdapterClass.OnItemClickListener {
             override fun onItemClick(position:Int){
@@ -58,9 +58,22 @@ class food : Fragment() {
         }
 
         )
+        adapter.setOnDeleteClickListener(object:AdapterClass.OnDeleteClickListener{
+        override fun onDeleteClick(position: Int) {
+            // 이 곳에 삭제 이벤트를 처리하는 코드를 추가하세요
+            dataList.removeAt(position)
+            adapter.notifyItemRemoved(position)
+        }
+    })
+        recyclerView.adapter = adapter
+
 
 
     }
+
+
+
+
 
     override fun onResume() {
         super.onResume()
@@ -82,6 +95,7 @@ class food : Fragment() {
 
 //
 
+
     private fun getData(){
         for(i in titleList.indices){
             val dataClass = DataClass(titleList[i])
@@ -93,4 +107,6 @@ class food : Fragment() {
         super.onDestroyView()
         _binding = null
 
-    }    }
+    }
+
+}
