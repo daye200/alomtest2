@@ -1,5 +1,6 @@
 package com.example.alomtest.food.mainpage
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
 import com.example.alomtest.databinding.FragmentFoodBinding
 import com.example.alomtest.food.foodcustom01.AddActivity
+import com.example.alomtest.food.foodcustom01.AddActivity.Companion.RESULT_ADD_TASK
+import com.example.alomtest.food.foodcustom01.EditActivity
 
 
 class Food : Fragment() {
@@ -21,6 +24,9 @@ class Food : Fragment() {
     private lateinit var dataList:ArrayList<DataClass>
     lateinit var titleList:Array<String>
     private lateinit var adapter: AdapterClass
+    private val REQUEST_CODE_EDIT = 100
+
+
 
 
 
@@ -46,9 +52,20 @@ class Food : Fragment() {
 
         adapter = AdapterClass(dataList)
 
+        adapter.setOnItemClickListener(object: AdapterClass.OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                val intent = Intent(requireContext(), EditActivity::class.java)
+                intent.putExtra("dataTitle", dataList[position].dataTitle)
+                requestEditLauncher.launch(intent)
+            }
 
-        adapter.setOnItemClickListener(object : AdapterClass.OnItemClickListener {
-            override fun onItemClick(position:Int){
+        })
+
+
+
+
+        adapter.setOnFooterClickListener(object : AdapterClass.OnFooterClickListener {
+            override fun FooterClick(position:Int){
 
                 if(position == adapter.itemCount-1){
                     val intent = Intent(requireContext(), AddActivity::class.java)
@@ -65,6 +82,7 @@ class Food : Fragment() {
             adapter.notifyItemRemoved(position)
         }
     })
+
         recyclerView.adapter = adapter
 
 
@@ -75,10 +93,28 @@ class Food : Fragment() {
 
 
 
+
+
     override fun onResume() {
         super.onResume()
 
 
+    }
+
+
+    private val requestEditLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val editedDataTitle = result.data?.getStringExtra("editedDataTitle")
+            handleEditResult(editedDataTitle)
+        }
+    }
+    private fun handleEditResult(editedDataTitle: String?) {
+        val position = findPositionByDataTitle(editedDataTitle)
+        if (position != -1) {
+            // 데이터 갱신
+            dataList[position].dataTitle = editedDataTitle ?: ""
+            adapter.notifyItemChanged(position)
+        }
     }
 //before
     private val requestLauncher =
@@ -91,6 +127,8 @@ class Food : Fragment() {
                 }
             }
         }
+
+
 
 
 //
@@ -109,4 +147,13 @@ class Food : Fragment() {
 
     }
 
+    private fun findPositionByDataTitle(dataTitle: String?): Int {
+        for (i in dataList.indices) {
+            if (dataList[i].dataTitle == dataTitle) {
+                return i
+            }
+        }
+        return -1
+    }
 }
+

@@ -2,6 +2,7 @@ package com.example.alomtest.food.foodcustom01
 
 import android.widget.SearchView
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -11,19 +12,21 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
-import com.example.alomtest.databinding.ActivityAddBinding
+import com.example.alomtest.databinding.ActivityFoodEditBinding
+import com.example.alomtest.food.mainpage.DataClass
 import com.example.alomtest.food.mainpage.Food
 
 import com.google.android.material.card.MaterialCardView
 import java.util.Locale
 
-class AddActivity : AppCompatActivity() {
+class EditActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
     private lateinit var cardView : MaterialCardView
@@ -32,13 +35,29 @@ class AddActivity : AppCompatActivity() {
     private lateinit var expandableLayout2 : View
     private var mList = ArrayList<FoodData>()
     private lateinit var adapter: FoodAdapter
-    private lateinit var binding: ActivityAddBinding
+    private lateinit var binding: ActivityFoodEditBinding
     private lateinit var expandBtn: Button
     private var isImage1Visible = true
+    private lateinit var dataList:ArrayList<DataClass>
+    lateinit var titleList:Array<String>
+    private val editActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val editedDataTitle = result.data?.getStringExtra("editedDataTitle")
+            handleEditResult(editedDataTitle)
+        }
+    }
+    private fun findPositionByDataTitle(dataTitle: String?): Int {
+        for (i in dataList.indices) {
+            if (dataList[i].dataTitle == dataTitle) {
+                return i
+            }
+        }
+        return -1
+    }
+
 
     companion object {
-        const val RESULT_ADD_TASK = 123 // Any unique value
-
+        const val RESULT_ADD_TASK = 456 // Any unique value
     }
     @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.KITKAT)
@@ -46,9 +65,9 @@ class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityAddBinding.inflate(layoutInflater)
+        binding = ActivityFoodEditBinding.inflate(layoutInflater)
 
-        setContentView(R.layout.activity_add)
+        setContentView(R.layout.activity_food_edit)
 
         cardView = findViewById(R.id.materialCardView)
         recyclerView = findViewById(R.id.recyclerViewfood2)
@@ -70,44 +89,46 @@ class AddActivity : AppCompatActivity() {
 
         addDataToList()
         if (searchView!=null){
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                filterList(newText)
-                return true
-            }
-        })}
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    filterList(newText)
+                    return true
+                }
+            })}
 
-   findViewById<Button>(R.id.add_next).setOnClickListener{
+        findViewById<Button>(R.id.food_edit_next).setOnClickListener{
 
-            val newTask = findViewById<EditText>(R.id.add_edit).text.toString()
+            val newTask = findViewById<EditText>(R.id.food_edit_edit).text.toString()
+            val editedDataTitle = "수정된 음식명"
 
-            val resultintent = Intent(this, Food::class.java)
-            resultintent.putExtra("newTask", newTask)
-            setResult(RESULT_ADD_TASK, resultintent)
+            val resultintent = Intent()
+            resultintent.putExtra("editedDataTitle", editedDataTitle)
+            setResult(Activity.RESULT_OK, resultintent)
             finish()
         }
+
         expandableLayout.visibility = View.GONE // 초기에 화면에 보이지 않도록 설정
         cardView.visibility = View.GONE
 
 
-   findViewById<Button>(R.id.expandBtn).setOnClickListener {
-       runOnUiThread {
-            toggleImage()
+        findViewById<Button>(R.id.expandBtn).setOnClickListener {
+            runOnUiThread {
+                toggleImage()
 
-            if (expandableLayout.visibility == View.GONE) {
-                expandableLayout.visibility = View.VISIBLE
-                cardView.visibility = View.VISIBLE
+                if (expandableLayout.visibility == View.GONE) {
+                    expandableLayout.visibility = View.VISIBLE
+                    cardView.visibility = View.VISIBLE
 
-            } else {
-                expandableLayout.visibility = View.GONE
-                cardView.visibility = View.GONE
+                } else {
+                    expandableLayout.visibility = View.GONE
+                    cardView.visibility = View.GONE
 
-            }
-        }}
+                }
+            }}
 
         findViewById<Button>(R.id.expandBtn2).setOnClickListener {
             if (expandableLayout2.visibility == View.GONE) {
@@ -141,7 +162,19 @@ class AddActivity : AppCompatActivity() {
             }
 
 
-    } }
+        }
+
+
+    }
+    private fun handleEditResult(editedDataTitle: String?) {
+        val position = findPositionByDataTitle(editedDataTitle)
+        if (position != -1) {
+            // 데이터 갱신
+            dataList[position].dataTitle = editedDataTitle ?: ""
+            adapter.notifyItemChanged(position)
+        }
+    }
+
 
 
 
@@ -163,22 +196,22 @@ class AddActivity : AppCompatActivity() {
 
 
     }
-private fun filterList(query: String?) {
-    if (query != null) {
-        val filteredList = ArrayList<FoodData>()
+    private fun filterList(query: String?) {
+        if (query != null) {
+            val filteredList = ArrayList<FoodData>()
 
-        for (i in mList) {
-            if (i.title.lowercase(Locale.ROOT).contains(query)) {
-                filteredList.add(i)
+            for (i in mList) {
+                if (i.title.lowercase(Locale.ROOT).contains(query)) {
+                    filteredList.add(i)
+                }
+            }
+            if (filteredList.isEmpty()) {
+                Toast.makeText(this, "검색 결과 없음", Toast.LENGTH_SHORT).show()
+            } else {
+                adapter.setFilteredList(filteredList)
             }
         }
-        if (filteredList.isEmpty()) {
-            Toast.makeText(this, "검색 결과 없음", Toast.LENGTH_SHORT).show()
-        } else {
-            adapter.setFilteredList(filteredList)
-        }
     }
-}
 
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -226,30 +259,30 @@ private fun filterList(query: String?) {
 
 
 
-       // fun getgramFromEditText(): Int {
-        //    val gramText = gramEditText.text.toString()
-         //   return if (gramText.isNotEmpty()) {
-         //       gramText.toInt()
-          //  } else {
-                // 기본값 또는 에러 처리를 원하는 대로 설정
-         //       0
-         //   }
-      //  }
+    // fun getgramFromEditText(): Int {
+    //    val gramText = gramEditText.text.toString()
+    //   return if (gramText.isNotEmpty()) {
+    //       gramText.toInt()
+    //  } else {
+    // 기본값 또는 에러 처리를 원하는 대로 설정
+    //       0
+    //   }
+    //  }
 
-       // fun getTimeFromTimePicker(): String {
-       //     val hour = if (Build.VERSION.SDK_INT >= 23) {
-       //         timePicker.hour
-       //     } else {
-       //         timePicker.currentHour
-       //     }
+    // fun getTimeFromTimePicker(): String {
+    //     val hour = if (Build.VERSION.SDK_INT >= 23) {
+    //         timePicker.hour
+    //     } else {
+    //         timePicker.currentHour
+    //     }
 
-        //    val minute = if (Build.VERSION.SDK_INT >= 23) {
-        //        timePicker.minute
-        //    } else {
-        //        timePicker.currentMinute
-        //    }
+    //    val minute = if (Build.VERSION.SDK_INT >= 23) {
+    //        timePicker.minute
+    //    } else {
+    //        timePicker.currentMinute
+    //    }
 
-       //     // 시간을 원하는 형식으로 포맷팅
-       //     return String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
-      //  }
+    //     // 시간을 원하는 형식으로 포맷팅
+    //     return String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
+    //  }
 }

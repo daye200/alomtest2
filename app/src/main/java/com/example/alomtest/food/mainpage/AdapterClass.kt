@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
 import com.example.alomtest.food.foodcustom01.AddActivity
+import com.example.alomtest.food.foodcustom01.EditActivity
 
 
 class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -26,15 +27,18 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
     interface OnDeleteClickListener {
         fun onDeleteClick(position: Int)
     }
+    interface OnFooterClickListener{
+        fun FooterClick(position:Int)
+    }
     private var itemClickListener: OnItemClickListener?=null
     private var itemLongClickListener: OnItemLongClickListener?=null
     private var onDeleteClickListener: OnDeleteClickListener?=null
+    private var FooterClickListener: OnFooterClickListener?=null
 
    // private var adapter: AdapterClass?=null
 
     fun removeItem(position: Int) {
         if (position < dataList.size) {
-            Log.d("test","test2")
             dataList.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, dataList.size)
@@ -69,6 +73,9 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
     fun setOnDeleteClickListener(listener: OnDeleteClickListener) {
         this.onDeleteClickListener = listener
     }
+    fun setOnFooterClickListener(listener: OnFooterClickListener){
+        this.FooterClickListener = listener
+    }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)){
             ITEM->{
@@ -96,7 +103,7 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
             FOOTER->{val footerViewHolder = holder as FooterViewHolderClass
             footerViewHolder.bindFooterData()
                 footerViewHolder.itemView.setOnClickListener {
-                    itemClickListener?.onItemClick(dataList.size)
+                    FooterClickListener?.FooterClick(dataList.size)
                 }}
 
 
@@ -147,6 +154,12 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
                     // AdapterClass의 removeItem 메서드를 호출하여 아이템 삭제
                     onDeleteClickListener?.onDeleteClick(position)
 
+                }
+            }
+            buttonrevise.setOnClickListener{
+                val position = bindingAdapterPosition
+                if(position != RecyclerView.NO_POSITION){
+                    itemClickListener?.onItemClick(position)
                 }
             }
         }
