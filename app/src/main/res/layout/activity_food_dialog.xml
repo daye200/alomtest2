@@ -8,6 +8,7 @@
     android:background="@drawable/food_item"
     android:layout_gravity="center"
     android:radius="30dp"
+
     >
 
     <TextView
