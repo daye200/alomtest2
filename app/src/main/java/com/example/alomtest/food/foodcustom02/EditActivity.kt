@@ -1,4 +1,4 @@
-package com.example.alomtest.food.foodcustom01
+package com.example.alomtest.food.foodcustom02
 
 import android.widget.SearchView
 import android.annotation.SuppressLint
@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -20,6 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
 import com.example.alomtest.databinding.ActivityFoodEditBinding
+import com.example.alomtest.food.foodcustom01.AddActivity
+import com.example.alomtest.food.foodcustom01.AddActivity.Companion.RESULT_ADD_TASK
+import com.example.alomtest.food.foodcustom01.FoodAdapter
+import com.example.alomtest.food.foodcustom01.FoodData
+import com.example.alomtest.food.foodcustom01.SwipeGesture
 import com.example.alomtest.food.mainpage.DataClass
 import com.example.alomtest.food.mainpage.Food
 
@@ -40,24 +46,25 @@ class EditActivity : AppCompatActivity() {
     private var isImage1Visible = true
     private lateinit var dataList:ArrayList<DataClass>
     lateinit var titleList:Array<String>
-    private val editActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val editedDataTitle = result.data?.getStringExtra("editedDataTitle")
-            handleEditResult(editedDataTitle)
-        }
-    }
-    private fun findPositionByDataTitle(dataTitle: String?): Int {
-        for (i in dataList.indices) {
-            if (dataList[i].dataTitle == dataTitle) {
-                return i
-            }
-        }
-        return -1
-    }
+//    private val editActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//        if (result.resultCode == Activity.RESULT_OK) {
+//            val editedDataTitle = result.data?.getStringExtra("editedDataTitle")
+//            handleEditResult(editedDataTitle)
+//        }
+//    }
+//    private fun findPositionByDataTitle(dataTitle: String?): Int {
+//
+//        for (i in dataList.indices) {
+//            if (dataList[i].dataTitle == dataTitle) {
+//                return i
+//            }
+//        }
+//        return -1
+//    }
 
 
     companion object {
-        const val RESULT_ADD_TASK = 456 // Any unique value
+        const val RESULT_EDIT_TASK = 456 // Any unique value
     }
     @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.KITKAT)
@@ -102,12 +109,13 @@ class EditActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.food_edit_next).setOnClickListener{
 
-            val newTask = findViewById<EditText>(R.id.food_edit_edit).text.toString()
-            val editedDataTitle = "수정된 음식명"
 
-            val resultintent = Intent()
-            resultintent.putExtra("editedDataTitle", editedDataTitle)
-            setResult(Activity.RESULT_OK, resultintent)
+            val editedDataTitle = findViewById<EditText>(R.id.food_edit_edit).text.toString()
+
+            val resultIntent = Intent()
+            resultIntent.putExtra("editedDataTitle", editedDataTitle)
+            resultIntent.putExtra("position", intent.getIntExtra("position", -1))
+            setResult(RESULT_EDIT_TASK, resultIntent)
             finish()
         }
 
@@ -166,14 +174,17 @@ class EditActivity : AppCompatActivity() {
 
 
     }
-    private fun handleEditResult(editedDataTitle: String?) {
-        val position = findPositionByDataTitle(editedDataTitle)
-        if (position != -1) {
-            // 데이터 갱신
-            dataList[position].dataTitle = editedDataTitle ?: ""
-            adapter.notifyItemChanged(position)
-        }
-    }
+//    private fun handleEditResult(editedDataTitle: String?) {
+//        Log.d("EditActivity", "Handling edit result for Data Title: $editedDataTitle")
+//        val position = findPositionByDataTitle(editedDataTitle)
+//
+//
+//        if (position != -1) {
+//            // 데이터 갱신
+//            dataList[position].dataTitle = editedDataTitle ?: ""
+//            adapter.notifyItemChanged(position)
+//        }
+//    }
 
 
 

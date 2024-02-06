@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alomtest.R
 import com.example.alomtest.food.foodcustom01.AddActivity
-import com.example.alomtest.food.foodcustom01.EditActivity
+import com.example.alomtest.food.foodcustom02.EditActivity
 
 
 class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -27,13 +27,18 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
     interface OnDeleteClickListener {
         fun onDeleteClick(position: Int)
     }
+    interface OnReviseClickListener{
+        fun ReviseClick(position: Int)
+    }
     interface OnFooterClickListener{
         fun FooterClick(position:Int)
     }
     private var itemClickListener: OnItemClickListener?=null
     private var itemLongClickListener: OnItemLongClickListener?=null
-    private var onDeleteClickListener: OnDeleteClickListener?=null
+    private var DeleteClickListener: OnDeleteClickListener?=null
     private var FooterClickListener: OnFooterClickListener?=null
+    private var ReviseClickListener: OnReviseClickListener?=null
+
 
    // private var adapter: AdapterClass?=null
 
@@ -71,7 +76,10 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
         this.itemLongClickListener = listener
     }
     fun setOnDeleteClickListener(listener: OnDeleteClickListener) {
-        this.onDeleteClickListener = listener
+        this.DeleteClickListener = listener
+    }
+    fun setOnReviseClickListener(listener: OnReviseClickListener){
+        this.ReviseClickListener = listener
     }
     fun setOnFooterClickListener(listener: OnFooterClickListener){
         this.FooterClickListener = listener
@@ -152,14 +160,14 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     // AdapterClass의 removeItem 메서드를 호출하여 아이템 삭제
-                    onDeleteClickListener?.onDeleteClick(position)
+                    DeleteClickListener?.onDeleteClick(position)
 
                 }
             }
             buttonrevise.setOnClickListener{
                 val position = bindingAdapterPosition
                 if(position != RecyclerView.NO_POSITION){
-                    itemClickListener?.onItemClick(position)
+                    ReviseClickListener?.ReviseClick(position)
                 }
             }
         }
