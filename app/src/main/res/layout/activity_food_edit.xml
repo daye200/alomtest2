@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".food.foodcustom01.AddActivity">
+    tools:context=".food.foodcustom02.FoodEditActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,11 +15,12 @@
         <Button
             android:id="@+id/canclebutton"
             android:layout_width="0dp"
+            android:padding="15dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="5dp"
             android:gravity="left"
-            android:padding="18dp"
+            android:background="@color/transparent"
             android:fontFamily="@font/bold"
             android:onClick="insert_data"
             android:text="취소"
@@ -33,17 +34,19 @@
         <Button
             android:id="@+id/food_edit_next"
             android:layout_width="0dp"
+            android:padding="15dp"
+            android:background="@color/transparent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="5dp"
             android:gravity="right"
-            android:padding="18dp"
             android:fontFamily="@font/bold"
             android:text="수정"
             android:textColor="#636CFF" />
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="64dp"
         android:layout_height="21dp"
         android:fontFamily="@font/medium"
@@ -58,10 +61,8 @@
         android:layout_width="341dp"
         android:layout_height="31dp"
         android:src="@drawable/group_126"
-        android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="0dp"/>
-
 
     <Button
         android:id="@+id/expandBtn"
@@ -70,14 +71,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="-33dp"
         android:layout_marginBottom="-20dp"
-        android:background="@android:color/transparent"
-        android:fontFamily="@font/medium"
         android:gravity="start|center_vertical"
-        android:text="선택하기"
         android:paddingLeft="15dp"
-        android:textColor="#747CFF"
+        android:text="선택하기"
+        android:fontFamily="@font/medium"
         android:textSize="14dp"
-        android:clickable="true"/>
+        android:textColor="#747CFF"
+        android:background="@android:color/transparent"/>
+
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
@@ -88,7 +89,7 @@
         app:cardCornerRadius="10dp"
         app:strokeColor="@android:color/transparent"
         app:cardBackgroundColor="@android:color/transparent"
-        android:visibility="visible"
+        android:visibility="gone"
         app:cardElevation="0dp"
         >
 
@@ -98,14 +99,13 @@
             android:layout_height="200dp"
             android:background="@drawable/substract"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             >
 
             <LinearLayout
                 android:layout_width="341dp"
                 android:layout_height="50dp"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/materialCardView3"
@@ -114,15 +114,17 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="23dp"
                     android:layout_marginRight="20dp"
+                    app:cardElevation="0dp"
                     android:background="#B9BDFF">
 
-                    <android.widget.SearchView
+                    <androidx.appcompat.widget.SearchView
                         android:id="@+id/searchViewfood"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="top"
-                        android:background="#EDEEFF"
-                        android:iconifiedByDefault="false"
+                        android:background="@drawable/search"
+                        app:searchIcon="@android:color/transparent"
+                        app:iconifiedByDefault="false"
                         app:queryBackground="@android:color/transparent"
                         tools:layout_editor_absoluteX="116dp"
                         tools:layout_editor_absoluteY="73dp" />
@@ -142,7 +144,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/expandableLayout2"
                 android:layout_width="341dp"
                 android:layout_height="50dp"
                 android:orientation="vertical"
@@ -160,55 +161,98 @@
 
                 </TextView>
 
-                <EditText
-                    android:layout_width="318dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="12dp">
-                </EditText>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
+                    <EditText
+                        android:id="@+id/foodAddEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_weight="247"
+                        android:layout_marginLeft="2dp"
+                        android:fontFamily="@font/medium"
+                        android:textColor="#9195D4"
+                        android:text="음식 추가하기"
+                        android:textSize="12dp"
+                        android:paddingLeft="15dp"
+                        android:imeOptions="actionDone"
+                        android:inputType="text">
+                    </EditText>
 
+                    <ImageView
+                        android:layout_width="1.3dp"
+                        android:layout_height="match_parent"
+                        android:foreground="@drawable/line_57">
+                    </ImageView>
+
+                    <EditText
+                        android:id="@+id/kcalAddEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_weight="93"
+                        android:fontFamily="@font/medium"
+                        android:textColor="#9195D4"
+                        android:text="100 Kcal"
+                        android:textSize="12dp"
+                        android:gravity="center"
+                        android:imeOptions="actionDone"
+                        android:inputType="number">
+                    </EditText>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewfood2"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#B9BDFF"
-                android:paddingLeft="15dp"
-                />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="341dp"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewfood2"
+                    android:layout_width="341dp"
+                    android:layout_height="match_parent"
+                    android:background="#B9BDFF"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
+        android:id="@+id/textView4"
         android:layout_width="81dp"
         android:layout_height="20dp"
         android:fontFamily="@font/medium"
         android:text="섭취 그램 수"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="30dp"
         android:textColor="#1A28FF" />
-
 
     <EditText
         android:id="@+id/food_edit_edit"
         android:layout_width="341dp"
         android:layout_height="31dp"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="25dp"
-        android:background="@drawable/rectangle_133"
         android:ems="10"
-        android:paddingLeft="15dp"
         android:fontFamily="@font/medium"
+        android:textColorHint="#747CFF"
         android:hint="0g"
-        android:inputType="text"
-        android:textColor="#747CFF"
-        android:textSize="12sp" />
+        android:inputType="number"
+        android:paddingLeft="25dp"
+
+        android:textSize="12sp"
+        android:background="@drawable/rectangle_133"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
+        android:id="@+id/textView5"
         android:layout_width="65dp"
         android:layout_height="19dp"
         android:fontFamily="@font/medium"
@@ -217,39 +261,62 @@
         android:layout_marginLeft="30dp"
         android:textColor="#1A28FF" />
 
-    <Button
-        android:id="@+id/expandBtn3"
+    <ImageView
+        android:id="@+id/timeimageView"
         android:layout_width="341dp"
         android:layout_height="31dp"
+        android:src="@drawable/group_126"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="-15.5dp"/>
+        android:layout_marginBottom="0dp"/>
 
-
-    <!--<com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView2"
+    <Button
+        android:id="@+id/expandBtn_time"
         android:layout_width="341dp"
-        android:layout_height="187dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-33dp"
+        android:layout_marginBottom="-20dp"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="15dp"
+        android:text="선택하기"
+        android:fontFamily="@font/medium"
+        android:textSize="14dp"
+        android:textColor="#747CFF"
+        android:background="@android:color/transparent"/>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView_time"
+        android:layout_width="341dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:orientation="vertical"
         app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
         app:strokeColor="@android:color/transparent"
         app:cardBackgroundColor="@android:color/transparent"
         android:visibility="gone"
         >
 
-
         <LinearLayout
-            android:id="@+id/expandableLayout3"
+            android:id="@+id/expandableLayout_time"
             android:layout_width="341dp"
-            android:layout_height="187dp"
+            android:layout_height="200dp"
             android:background="@drawable/substract"
             android:orientation="vertical"
             android:visibility="gone"
             >
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"
+                />
+
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>-->
+    </com.google.android.material.card.MaterialCardView>
 
 
 

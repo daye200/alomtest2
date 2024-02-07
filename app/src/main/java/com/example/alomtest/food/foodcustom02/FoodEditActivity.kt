@@ -1,4 +1,4 @@
-package com.example.alomtest.food.foodcustom01
+package com.example.alomtest.food.foodcustom02
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -21,13 +21,12 @@ import android.widget.TimePicker
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.alomtest.R
-import com.example.alomtest.databinding.ActivityAddBinding
+import com.example.alomtest.databinding.ActivityFoodEditBinding
 import com.example.alomtest.food.foodcustom01.FoodAdapter
 import com.example.alomtest.food.foodcustom01.FoodData
 import com.example.alomtest.food.foodcustom01.SwipeGesture
-import com.example.alomtest.food.mainpage.Food
 
-class AddActivity : AppCompatActivity() {
+class FoodEditActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
@@ -39,7 +38,7 @@ class AddActivity : AppCompatActivity() {
     private lateinit var expandableLayout_time: View
     private var mList: MutableList<FoodData> = mutableListOf()
     private lateinit var adapter: FoodAdapter
-    private lateinit var binding: ActivityAddBinding
+    private lateinit var binding: ActivityFoodEditBinding
     private lateinit var expandBtn: Button
     private lateinit var expandBtn_time: Button
     private lateinit var foodaddBtn: Button
@@ -50,8 +49,7 @@ class AddActivity : AppCompatActivity() {
     private lateinit var kcalAddEditText: EditText
     private lateinit var timePicker: TimePicker
     companion object {
-        const val RESULT_ADD_TASK = 123 // Any unique value
-
+        const val RESULT_EDIT_TASK = 456 // Any unique value
     }
 
 
@@ -60,7 +58,7 @@ class AddActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddBinding.inflate(layoutInflater)
+        binding = ActivityFoodEditBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
 
@@ -81,7 +79,7 @@ class AddActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = FoodAdapter(mList)
         recyclerView.adapter = adapter
-        gramEditText = findViewById(R.id.add_edit)
+        gramEditText = findViewById(R.id.food_edit_edit)
         foodAddEditText = findViewById(R.id.foodAddEditText)
         kcalAddEditText = findViewById(R.id.kcalAddEditText)
         timePicker = findViewById(R.id.timePicker)
@@ -101,14 +99,14 @@ class AddActivity : AppCompatActivity() {
             }
         })
 
-        binding.addNext.setOnClickListener() {
-            val newTask = findViewById<EditText>(R.id.add_edit).text.toString()
+        binding.foodEditNext.setOnClickListener() {
+            val editedDataTitle = findViewById<EditText>(R.id.food_edit_edit).text.toString()
 
-            val resultintent = Intent(this, Food::class.java)
-            resultintent.putExtra("newTask", newTask)
-            setResult(RESULT_ADD_TASK, resultintent)
+            val resultIntent = Intent()
+            resultIntent.putExtra("editedDataTitle", editedDataTitle)
+            resultIntent.putExtra("position", intent.getIntExtra("position", -1))
+            setResult(RESULT_EDIT_TASK, resultIntent)
             finish()
-            // saveData()
         }
 
         binding.expandBtn.setOnClickListener {
@@ -117,7 +115,6 @@ class AddActivity : AppCompatActivity() {
             if (expandableLayout.visibility == View.GONE) {
                 expandableLayout.visibility = View.VISIBLE
                 cardView.visibility = View.VISIBLE
-                Log.d("test","expandbtn1")
             } else {
                 expandableLayout.visibility = View.GONE
                 cardView.visibility = View.GONE
@@ -128,9 +125,12 @@ class AddActivity : AppCompatActivity() {
         binding.expandBtnTime.setOnClickListener {
             toggleImageTime()
 
+            Log.d("eT", "함수진입1")
             if (expandableLayout_time.visibility == View.GONE) {
+                Log.d("eT", "함수진입2")
                 expandableLayout_time.visibility = View.VISIBLE
                 cardview_time.visibility = View.VISIBLE
+                Log.d("eT", "함수진입3")
             } else {
                 expandableLayout_time.visibility = View.GONE
                 cardview_time.visibility = View.GONE

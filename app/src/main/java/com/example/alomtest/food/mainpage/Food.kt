@@ -15,7 +15,7 @@ import com.example.alomtest.R
 import com.example.alomtest.databinding.FragmentFoodBinding
 import com.example.alomtest.food.foodcustom01.AddActivity
 import com.example.alomtest.food.foodcustom01.AddActivity.Companion.RESULT_ADD_TASK
-import com.example.alomtest.food.foodcustom02.EditActivity
+import com.example.alomtest.food.foodcustom02.FoodEditActivity
 
 
 class Food : Fragment() {
@@ -64,7 +64,7 @@ class Food : Fragment() {
         adapter.setOnReviseClickListener(object: AdapterClass.OnReviseClickListener{
             override fun ReviseClick(position: Int) {
                 if (position >= 0 && position < dataList.size){
-                val intent = Intent(requireContext(), EditActivity::class.java)
+                val intent = Intent(requireContext(), FoodEditActivity::class.java)
                 intent.putExtra("dataTitle", dataList[position].dataTitle)
                     intent.putExtra("position", position)
                 requestEditLauncher.launch(intent)
@@ -115,7 +115,7 @@ class Food : Fragment() {
 
 
     private val requestEditLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == EditActivity.RESULT_EDIT_TASK) {
+        if (result.resultCode == FoodEditActivity.RESULT_EDIT_TASK) {
             handleEditResult(result.data)
         }
     }

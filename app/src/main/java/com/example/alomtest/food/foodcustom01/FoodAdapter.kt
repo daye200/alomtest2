@@ -17,6 +17,7 @@ class FoodAdapter(private var mList : MutableList<FoodData>) :
 
     inner class FoodViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val titleTv : TextView = itemView.findViewById(R.id.titleTv)
+        val titleTv2: TextView = itemView.findViewById(R.id.titleTv2)
         init {
             // 아이템 뷰가 클릭되었을 때의 동작을 정의
             itemView.setOnClickListener {
@@ -24,13 +25,7 @@ class FoodAdapter(private var mList : MutableList<FoodData>) :
             }
     }}
 
-//    fun setFilteredList(mList: List<FoodData>){
-//        this.mList = mList.toMutableList()
-//        notifyDataSetChanged()
-//    }
 fun setFilteredList(mList: List<FoodData>) {
-//    mList.clear()
-//    mList.addAll(filteredData)
     this.mList = mList.toMutableList()
     notifyDataSetChanged()
 }
@@ -41,6 +36,7 @@ fun setFilteredList(mList: List<FoodData>) {
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         holder.titleTv.text = mList[position].title
+        holder.titleTv2.text = mList[position].calories.toString()
 
     }
 
