@@ -25,7 +25,6 @@ class Food : Fragment() {
     private lateinit var dataList:ArrayList<DataClass>
     lateinit var titleList:Array<String>
     private lateinit var adapter: AdapterClass
-    private val REQUEST_CODE_EDIT = 100
 
 //    private val editActivityResult =
 //        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -136,8 +135,9 @@ class Food : Fragment() {
                 val newTask = result.data?.getStringExtra("newTask")
                 val foodName = result.data?.getStringExtra("foodname")
                 val timeFormat = result.data?.getStringExtra("timeFormat")
+                val calories = result.data?.getIntExtra("calories", 0) ?: 0
                 newTask?.let{
-                    dataList.add(DataClass(it, foodName.orEmpty(), timeFormat.orEmpty()))
+                    dataList.add(DataClass(it, foodName.orEmpty(), timeFormat.orEmpty(),calories))
                     adapter.notifyItemInserted(dataList.size-1)
                 }
             }

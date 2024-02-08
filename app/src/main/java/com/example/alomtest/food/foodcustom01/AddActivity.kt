@@ -17,6 +17,7 @@ import java.util.Locale
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.TimePicker
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -103,11 +104,13 @@ class AddActivity : AppCompatActivity() {
 
         binding.addNext.setOnClickListener() {
             val newTask = findViewById<EditText>(R.id.add_edit).text.toString()
+            val calories = mList.find { it.title == expandBtn.text.toString() }?.calories ?: 0
 
             val resultintent = Intent(this, Food::class.java)
             resultintent.putExtra("newTask", newTask)
             resultintent.putExtra("foodname",expandBtn.text.toString())
             resultintent.putExtra("timeFormat",binding.expandBtnTime.text.toString())
+            resultintent.putExtra("calories",calories)
 
             setResult(RESULT_ADD_TASK, resultintent)
             finish()
@@ -195,6 +198,7 @@ class AddActivity : AppCompatActivity() {
         mList.add(FoodData("초코우유",800))
         mList.add(FoodData("딸기우유",900))
 
+
         adapter.notifyDataSetChanged()
 
         addFoodToList(mList.size - 1)
@@ -206,12 +210,12 @@ class AddActivity : AppCompatActivity() {
 
         if (userInput2.isNotEmpty()) {
             try {
-                val calories = userInput2.toInt()
+                val caloriesadd = userInput2.toInt()
                 if (userInput.isNotEmpty()) {
                     if (nextPosition != null) {
-                        mList.add(nextPosition, FoodData(userInput, calories))
+                        mList.add(nextPosition, FoodData(userInput, caloriesadd))
                     } else {
-                        mList.add(FoodData(userInput, calories))
+                        mList.add(FoodData(userInput, caloriesadd))
                     }
                     adapter.notifyDataSetChanged()
                 }
