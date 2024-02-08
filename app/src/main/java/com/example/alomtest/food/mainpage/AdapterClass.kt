@@ -176,7 +176,14 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
         }
         fun bind(data: DataClass){
             //rvTitle.text = data.dataTitle
-            foodcalories.text=data.calories.toString()
+            val calculatedCalories = if (data.dataTitle != "") {
+                data.calories * 0.01 * data.dataTitle.toInt()
+            } else {
+                data.calories
+            }
+            foodcalories.text=calculatedCalories.toString()
+            //foodcalories.text = if (data.calories > 0) data.calories.toString() else "N/A"
+            //foodcalories.text = if (data.calories != null ) data.calories.toString() else "0"
 
             foodSelectTextView.text = data.foodSelect // 여기서 food_select 설정
             foodTimeTextView.text = data.foodTime
