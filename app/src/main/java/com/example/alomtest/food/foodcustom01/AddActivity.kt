@@ -106,6 +106,9 @@ class AddActivity : AppCompatActivity() {
 
             val resultintent = Intent(this, Food::class.java)
             resultintent.putExtra("newTask", newTask)
+            resultintent.putExtra("foodname",expandBtn.text.toString())
+            resultintent.putExtra("timeFormat",binding.expandBtnTime.text.toString())
+
             setResult(RESULT_ADD_TASK, resultintent)
             finish()
             // saveData()
@@ -117,7 +120,6 @@ class AddActivity : AppCompatActivity() {
             if (expandableLayout.visibility == View.GONE) {
                 expandableLayout.visibility = View.VISIBLE
                 cardView.visibility = View.VISIBLE
-                Log.d("test","expandbtn1")
             } else {
                 expandableLayout.visibility = View.GONE
                 cardView.visibility = View.GONE
@@ -199,7 +201,6 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun addFoodToList(nextPosition: Int? = null) {
-        Log.d("addfoodTOList", "함수진입1")
         val userInput = foodAddEditText.text.toString().trim()
         val userInput2 = kcalAddEditText.text.toString().trim()
 
@@ -207,13 +208,11 @@ class AddActivity : AppCompatActivity() {
             try {
                 val calories = userInput2.toInt()
                 if (userInput.isNotEmpty()) {
-                    Log.d("addfoodTOList", "함수진입2")
                     if (nextPosition != null) {
                         mList.add(nextPosition, FoodData(userInput, calories))
                     } else {
                         mList.add(FoodData(userInput, calories))
                     }
-                    Log.d("addfoodTOList", "함수진입3")
                     adapter.notifyDataSetChanged()
                 }
             } catch (e: NumberFormatException) {
@@ -249,7 +248,6 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun deleteData(){
-        Log.d("deleteData","함수진입")
 
         val swipegesture = object : SwipeGesture(this){
             override fun onSwiped(viewHolder: ViewHolder,direction:Int){

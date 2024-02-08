@@ -134,8 +134,10 @@ class Food : Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
             if(result.resultCode== AddActivity.RESULT_ADD_TASK){
                 val newTask = result.data?.getStringExtra("newTask")
+                val foodName = result.data?.getStringExtra("foodname")
+                val timeFormat = result.data?.getStringExtra("timeFormat")
                 newTask?.let{
-                    dataList.add(DataClass(it))
+                    dataList.add(DataClass(it, foodName.orEmpty(), timeFormat.orEmpty()))
                     adapter.notifyItemInserted(dataList.size-1)
                 }
             }

@@ -29,41 +29,41 @@ class exercise : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        imageList = arrayOf(
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
+//        imageList = arrayOf(
+//            R.drawable.ic_launcher_foreground,
+//            R.drawable.ic_launcher_foreground,
+//            R.drawable.ic_launcher_foreground,
+//            R.drawable.ic_launcher_foreground,
+//            R.drawable.ic_launcher_foreground,
+//            R.drawable.ic_launcher_foreground,
+//            R.drawable.ic_launcher_foreground,
+//
+//        )
+//        titleList = arrayOf(
+//            "헬스",
+//            "복싱",
+//            "필라테스",
+//            "달리기",
+//            "수영",
+//            "등산",
+//            "기타 다른운동"
+//        )
+//
+//        recyclerView = view.findViewById(R.id.rv_food)
+//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//        recyclerView.setHasFixedSize(true)
+//        dataList = arrayListOf<DataClass>()
+//        getData()
+//
+//
+//    }
+//
+//    private fun getData(){
+//        for(i in titleList.indices){
+//            val dataClass = DataClass(titleList[i])
+//            dataList.add(dataClass)
+//        }
+//        recyclerView.adapter = AdapterClass(dataList)
+//    }
 
-        )
-        titleList = arrayOf(
-            "헬스",
-            "복싱",
-            "필라테스",
-            "달리기",
-            "수영",
-            "등산",
-            "기타 다른운동"
-        )
-
-        recyclerView = view.findViewById(R.id.rv_food)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.setHasFixedSize(true)
-        dataList = arrayListOf<DataClass>()
-        getData()
-
-
-    }
-
-    private fun getData(){
-        for(i in titleList.indices){
-            val dataClass = DataClass(titleList[i])
-            dataList.add(dataClass)
-        }
-        recyclerView.adapter = AdapterClass(dataList)
-    }
-
-}
+}}

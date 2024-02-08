@@ -16,6 +16,8 @@ class Food_dialog(context: Context, private val dataTitle: String) : Dialog(cont
         setContentView(R.layout.activity_food_dialog)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val dialogTitle = findViewById<TextView>(R.id.dialogTitle)
+        val dialogFoodClock = findViewById<TextView>(R.id.dialog_FoodClock)
+        val dialogFoodName = findViewById<TextView>(R.id.dialog_Foodname)
         dialogTitle.text = dataTitle
     }
 }

@@ -148,6 +148,8 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
 
     inner class ViewHolderClass(itemView: View):RecyclerView.ViewHolder(itemView) {
         private val rvTitle: TextView = itemView.findViewById(R.id.food_text)
+        private val foodSelectTextView: TextView = itemView.findViewById(R.id.food_select)
+        private val foodTimeTextView: TextView = itemView.findViewById(R.id.food_time)
         private val buttonrevise: Button = itemView.findViewById(R.id.food_revisebutton) // 실제 버튼 ID로 대체하세요
         private val buttondelete: Button = itemView.findViewById(R.id.food_deletebutton)
 
@@ -173,6 +175,8 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
         }
         fun bind(data: DataClass){
             rvTitle.text = data.dataTitle
+            foodSelectTextView.text = data.foodSelect // 여기서 food_select 설정
+            foodTimeTextView.text = data.foodTime
             buttonrevise.visibility = View.GONE
             buttondelete.visibility = View.GONE
         }
