@@ -10,7 +10,8 @@ import android.view.Window
 import android.widget.TextView
 import com.example.alomtest.R
 
-class Food_dialog(context: Context, private val dataTitle: String) : Dialog(context){
+class Food_dialog(context: Context, private val dataTitle: String, private val foodSelect: String="", // 새로 추가된 필드
+                  private val foodTime: String="",private val calories:Int=0) : Dialog(context){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_dialog)
@@ -18,6 +19,16 @@ class Food_dialog(context: Context, private val dataTitle: String) : Dialog(cont
         val dialogTitle = findViewById<TextView>(R.id.dialogTitle)
         val dialogFoodClock = findViewById<TextView>(R.id.dialog_FoodClock)
         val dialogFoodName = findViewById<TextView>(R.id.dialog_Foodname)
+        val dialogCalories = findViewById<TextView>(R.id.dialog_FoodCal)
+        val calcalories = if(dataTitle !="") {
+            (dataTitle.toInt() * 0.01 * calories).toInt()
+        }else{
+            calories
+        }
         dialogTitle.text = dataTitle
+        dialogFoodClock.text=foodTime
+        dialogFoodName.text=foodSelect
+        dialogCalories.text =calcalories.toString()
+
     }
 }

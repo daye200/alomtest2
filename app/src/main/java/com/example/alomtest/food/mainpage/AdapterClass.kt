@@ -2,6 +2,7 @@ package com.example.alomtest.food.mainpage
 
 import android.content.Context
 import android.content.Intent
+import android.icu.util.MeasureUnit.ITEM
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -94,10 +95,13 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
                   itemClickListener?.onItemClick(position)
                    val context = it.context
                    val dataTitle = dataList[position].dataTitle
+                   val foodSelect = dataList[position].foodSelect
+                   val foodTime = dataList[position].foodTime
+                   val calories = dataList[position].calories
 
 
                    // 커스텀 다이얼로그 표시
-                   val customDialog = Food_dialog(context, dataTitle)
+                   val customDialog = Food_dialog(context, dataTitle,foodSelect,foodTime,calories)
                    customDialog.show()
                }
                 itemViewHolder.itemView.setOnLongClickListener{
@@ -177,7 +181,7 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
         fun bind(data: DataClass){
             //rvTitle.text = data.dataTitle
             val calculatedCalories = if (data.dataTitle != "") {
-                data.calories * 0.01 * data.dataTitle.toInt()
+                (data.calories * 0.01 * data.dataTitle.toInt()).toInt()
             } else {
                 data.calories
             }
