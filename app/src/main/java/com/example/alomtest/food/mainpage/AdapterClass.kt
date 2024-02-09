@@ -173,6 +173,7 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
         private val foodcalories:TextView=itemView.findViewById(R.id.food_calories)
         private val buttonrevise: Button = itemView.findViewById(R.id.food_revisebutton) // 실제 버튼 ID로 대체하세요
         private val buttondelete: Button = itemView.findViewById(R.id.food_deletebutton)
+        private val fooditemshadow: ImageView = itemView.findViewById(R.id.fooditemshadow)
 
 
         init {
@@ -207,12 +208,14 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
 
             foodSelectTextView.text = data.foodSelect // 여기서 food_select 설정
             foodTimeTextView.text = data.foodTime
+            fooditemshadow.visibility=View.GONE
             buttonrevise.visibility = View.GONE
             buttondelete.visibility = View.GONE
         }
         fun toggleButtonVisibility() {
             buttonrevise.visibility = if (buttonrevise.visibility == View.VISIBLE) View.GONE else View.VISIBLE
             buttondelete.visibility = if (buttondelete.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            fooditemshadow.visibility = if(fooditemshadow.visibility==View.VISIBLE)View.GONE else View.VISIBLE
         }
 
 
