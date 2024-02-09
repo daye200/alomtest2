@@ -70,6 +70,21 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
 
             }
         }
+    private fun calculateTotalCalories(): Int {
+        var totalCalories = 0
+
+        for (data in dataList) {
+            val calculatedCalories = if (data.dataTitle != "") {
+                (data.calories * 0.01 * data.dataTitle.toInt()).toInt()
+            } else {
+                data.calories
+            }
+            totalCalories += calculatedCalories
+        }
+        return totalCalories
+    }
+
+
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.itemClickListener = listener
     }
@@ -98,10 +113,11 @@ class AdapterClass (private val dataList:ArrayList<DataClass>): RecyclerView.Ada
                    val foodSelect = dataList[position].foodSelect
                    val foodTime = dataList[position].foodTime
                    val calories = dataList[position].calories
+                   val totalCalories = calculateTotalCalories()
 
 
                    // 커스텀 다이얼로그 표시
-                   val customDialog = Food_dialog(context, dataTitle,foodSelect,foodTime,calories)
+                   val customDialog = Food_dialog(context, dataTitle,foodSelect,foodTime,calories, totalCalories)
                    customDialog.show()
                }
                 itemViewHolder.itemView.setOnLongClickListener{
