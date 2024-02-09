@@ -51,8 +51,10 @@ class AddActivity : AppCompatActivity() {
     private lateinit var foodAddEditText: EditText
     private lateinit var kcalAddEditText: EditText
     private lateinit var timePicker: TimePicker
+    private lateinit var foodaddback: Button
     companion object {
         const val RESULT_ADD_TASK = 123 // Any unique value
+        const val RESULT_BACK_TASK = 321
 
     }
 
@@ -87,6 +89,7 @@ class AddActivity : AppCompatActivity() {
         foodAddEditText = findViewById(R.id.foodAddEditText)
         kcalAddEditText = findViewById(R.id.kcalAddEditText)
         timePicker = findViewById(R.id.timePicker)
+        foodaddback=findViewById(R.id.food_add_back)
 
 
         addDefaultFoodToList()
@@ -119,6 +122,11 @@ class AddActivity : AppCompatActivity() {
             setResult(RESULT_ADD_TASK, resultintent)
             finish()}
             // saveData()
+        }
+        binding.foodAddBack.setOnClickListener{
+            val backintent = Intent(this,Food::class.java)
+            setResult(RESULT_BACK_TASK,backintent)
+            finish()
         }
 
         binding.expandBtn.setOnClickListener {

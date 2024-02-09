@@ -25,6 +25,7 @@ import com.example.alomtest.databinding.ActivityFoodEditBinding
 import com.example.alomtest.food.foodcustom01.FoodAdapter
 import com.example.alomtest.food.foodcustom01.FoodData
 import com.example.alomtest.food.foodcustom01.SwipeGesture
+import com.example.alomtest.food.mainpage.Food
 import com.google.android.material.snackbar.Snackbar
 
 class FoodEditActivity : AppCompatActivity() {
@@ -51,6 +52,7 @@ class FoodEditActivity : AppCompatActivity() {
     private lateinit var timePicker: TimePicker
     companion object {
         const val RESULT_EDIT_TASK = 456 // Any unique value
+        const val RESULT_EDIT_BACK_TASK = 654
     }
 
 
@@ -99,6 +101,11 @@ class FoodEditActivity : AppCompatActivity() {
                 return true
             }
         })
+        binding.foodEditBack.setOnClickListener(){
+            val backintent = Intent()
+            setResult(RESULT_EDIT_BACK_TASK,backintent)
+            finish()
+        }
 
         binding.foodEditNext.setOnClickListener() {
             val editedDataTitle = findViewById<EditText>(R.id.food_edit_edit).text.toString()
