@@ -25,6 +25,7 @@ import com.example.alomtest.databinding.ActivityFoodEditBinding
 import com.example.alomtest.food.foodcustom01.FoodAdapter
 import com.example.alomtest.food.foodcustom01.FoodData
 import com.example.alomtest.food.foodcustom01.SwipeGesture
+import com.google.android.material.snackbar.Snackbar
 
 class FoodEditActivity : AppCompatActivity() {
 
@@ -102,7 +103,9 @@ class FoodEditActivity : AppCompatActivity() {
         binding.foodEditNext.setOnClickListener() {
             val editedDataTitle = findViewById<EditText>(R.id.food_edit_edit).text.toString()
             val calories = mList.find { it.title == expandBtn.text.toString() }?.calories ?: 0
-
+            if(expandBtn.text.toString()=="선택하기" || expandBtn_time.text.toString()=="선택하기"){
+                Snackbar.make(it, "정보를 모두 입력해주세요!", Snackbar.LENGTH_SHORT).show()
+            }else{
             val resultIntent = Intent()
             resultIntent.putExtra("editedDataTitle", editedDataTitle)
             resultIntent.putExtra("editfoodname",expandBtn.text.toString())
@@ -110,7 +113,7 @@ class FoodEditActivity : AppCompatActivity() {
             resultIntent.putExtra("editcalories",calories)
             resultIntent.putExtra("position", intent.getIntExtra("position", -1))
             setResult(RESULT_EDIT_TASK, resultIntent)
-            finish()
+            finish()}
         }
 
         binding.expandBtnEdit.setOnClickListener {

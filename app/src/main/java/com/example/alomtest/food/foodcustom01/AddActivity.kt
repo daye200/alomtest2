@@ -27,6 +27,7 @@ import com.example.alomtest.food.foodcustom01.FoodAdapter
 import com.example.alomtest.food.foodcustom01.FoodData
 import com.example.alomtest.food.foodcustom01.SwipeGesture
 import com.example.alomtest.food.mainpage.Food
+import com.google.android.material.snackbar.Snackbar
 
 class AddActivity : AppCompatActivity() {
 
@@ -105,6 +106,9 @@ class AddActivity : AppCompatActivity() {
         binding.addNext.setOnClickListener() {
             val newTask = findViewById<EditText>(R.id.add_edit).text.toString()
             val calories = mList.find { it.title == expandBtn.text.toString() }?.calories ?: 0
+            if(expandBtn.text.toString()=="선택하기" || binding.expandBtnTime.text.toString()=="선택하기"){
+                Snackbar.make(it, "정보를 모두 입력해주세요!", Snackbar.LENGTH_SHORT).show()
+            }else{
 
             val resultintent = Intent(this, Food::class.java)
             resultintent.putExtra("newTask", newTask)
@@ -113,7 +117,7 @@ class AddActivity : AppCompatActivity() {
             resultintent.putExtra("calories",calories)
 
             setResult(RESULT_ADD_TASK, resultintent)
-            finish()
+            finish()}
             // saveData()
         }
 
