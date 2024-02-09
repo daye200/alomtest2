@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -74,6 +75,7 @@ class Food : Fragment() {
 
 
 
+
         adapter.setOnFooterClickListener(object : AdapterClass.OnFooterClickListener {
             override fun FooterClick(position:Int){
 
@@ -95,8 +97,7 @@ class Food : Fragment() {
     })
 
         recyclerView.adapter = adapter
-        binding.todaycalories.text = "${calculateTotalCalories()}"
-        binding.leftcalories.text=(2500 - calculateTotalCalories()).toString()
+
         updateTotalCalories()
 
 
@@ -186,6 +187,17 @@ class Food : Fragment() {
     private fun updateTotalCalories() {
         binding.todaycalories.text = calculateTotalCalories().toString()
         binding.leftcalories.text=(2500 - calculateTotalCalories()).toString()
+        binding.extracalories.text=(-2500 + calculateTotalCalories()).toString()
+        if(calculateTotalCalories()>2500){
+            binding.leftcalories.visibility=View.GONE
+            binding.extracalories.visibility=View.VISIBLE
+            binding.beforefoodcal.visibility=View.GONE
+            binding.afterfoodcal.visibility=View.VISIBLE
+        }else{
+            binding.leftcalories.visibility=View.VISIBLE
+        binding.extracalories.visibility=View.GONE
+        binding.beforefoodcal.visibility=View.VISIBLE
+        binding.afterfoodcal.visibility=View.GONE}
     }
 
     override fun onDestroyView(){
