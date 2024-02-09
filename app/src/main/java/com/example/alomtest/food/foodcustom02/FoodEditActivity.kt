@@ -70,8 +70,8 @@ class FoodEditActivity : AppCompatActivity() {
         searchView = binding.searchViewfood
         expandableLayout = binding.expandableLayout
         expandableLayout_time = binding.expandableLayoutTime
-        expandBtn = binding.expandBtn
-        expandBtn_time = binding.expandBtnTime
+        expandBtn = binding.expandBtnEdit
+        expandBtn_time = binding.expandBtnTimeEdit
         foodaddBtn = binding.expandBtn2
         foodimageView = binding.foodimageView
         timeimageView = binding.timeimageView
@@ -101,15 +101,19 @@ class FoodEditActivity : AppCompatActivity() {
 
         binding.foodEditNext.setOnClickListener() {
             val editedDataTitle = findViewById<EditText>(R.id.food_edit_edit).text.toString()
+            val calories = mList.find { it.title == expandBtn.text.toString() }?.calories ?: 0
 
             val resultIntent = Intent()
             resultIntent.putExtra("editedDataTitle", editedDataTitle)
+            resultIntent.putExtra("editfoodname",expandBtn.text.toString())
+            resultIntent.putExtra("edittimeFormat",expandBtn_time.text.toString())
+            resultIntent.putExtra("editcalories",calories)
             resultIntent.putExtra("position", intent.getIntExtra("position", -1))
             setResult(RESULT_EDIT_TASK, resultIntent)
             finish()
         }
 
-        binding.expandBtn.setOnClickListener {
+        binding.expandBtnEdit.setOnClickListener {
             toggleImage()
 
             if (expandableLayout.visibility == View.GONE) {
@@ -122,15 +126,12 @@ class FoodEditActivity : AppCompatActivity() {
 
         }
 
-        binding.expandBtnTime.setOnClickListener {
+        binding.expandBtnTimeEdit.setOnClickListener {
             toggleImageTime()
 
-            Log.d("eT", "함수진입1")
             if (expandableLayout_time.visibility == View.GONE) {
-                Log.d("eT", "함수진입2")
                 expandableLayout_time.visibility = View.VISIBLE
                 cardview_time.visibility = View.VISIBLE
-                Log.d("eT", "함수진입3")
             } else {
                 expandableLayout_time.visibility = View.GONE
                 cardview_time.visibility = View.GONE
@@ -159,7 +160,7 @@ class FoodEditActivity : AppCompatActivity() {
                 "오전 $hour 시 $minute 분"
             }
 
-            binding.expandBtnTime.text = timeFormat
+            binding.expandBtnTimeEdit.text = timeFormat
             expandBtn_time.setTextColor(Color.parseColor("#000000"))
         }
 
@@ -199,7 +200,6 @@ class FoodEditActivity : AppCompatActivity() {
     }
 
     private fun addFoodToList(nextPosition: Int? = null) {
-        Log.d("addfoodTOList", "함수진입1")
         val userInput = foodAddEditText.text.toString().trim()
         val userInput2 = kcalAddEditText.text.toString().trim()
 
@@ -207,13 +207,11 @@ class FoodEditActivity : AppCompatActivity() {
             try {
                 val calories = userInput2.toInt()
                 if (userInput.isNotEmpty()) {
-                    Log.d("addfoodTOList", "함수진입2")
                     if (nextPosition != null) {
                         mList.add(nextPosition, FoodData(userInput, calories))
                     } else {
                         mList.add(FoodData(userInput, calories))
                     }
-                    Log.d("addfoodTOList", "함수진입3")
                     adapter.notifyDataSetChanged()
                 }
             } catch (e: NumberFormatException) {
@@ -249,7 +247,6 @@ class FoodEditActivity : AppCompatActivity() {
     }
 
     private fun deleteData(){
-        Log.d("deleteData","함수진입")
 
         val swipegesture = object : SwipeGesture(this){
             override fun onSwiped(viewHolder: ViewHolder,direction:Int){

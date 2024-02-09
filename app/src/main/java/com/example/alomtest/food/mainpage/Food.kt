@@ -121,10 +121,19 @@ class Food : Fragment() {
     private fun handleEditResult(result: Intent?) {
         val position = result?.getIntExtra("position", -1) ?: -1
         val editedDataTitle = result?.getStringExtra("editedDataTitle")
+        val editfoodname = result?.getStringExtra("editfoodname")
+        val edittimeFormat = result?.getStringExtra("edittimeFormat")
+        val editcalories = result?.getIntExtra("editcalories", 0) ?: 0
+
+
         if (position != -1 && editedDataTitle != null) {
 
             // 데이터 갱신
             dataList[position].dataTitle = editedDataTitle
+            dataList[position].foodSelect = editfoodname.orEmpty()
+            dataList[position].foodTime = edittimeFormat.orEmpty()
+            dataList[position].calories = editcalories
+
             adapter.notifyItemChanged(position)
         }
     }
