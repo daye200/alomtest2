@@ -90,10 +90,13 @@ class Food : Fragment() {
             // 이 곳에 삭제 이벤트를 처리하는 코드를 추가하세요
             dataList.removeAt(position)
             adapter.notifyItemRemoved(position)
+            updateTotalCalories()
         }
     })
 
         recyclerView.adapter = adapter
+        binding.todaycalories.text = "${calculateTotalCalories()}"
+        updateTotalCalories()
 
 
 
@@ -135,6 +138,7 @@ class Food : Fragment() {
             dataList[position].calories = editcalories
 
             adapter.notifyItemChanged(position)
+            updateTotalCalories()
         }
     }
 //before
@@ -148,6 +152,7 @@ class Food : Fragment() {
                 newTask?.let{
                     dataList.add(DataClass(it, foodName.orEmpty(), timeFormat.orEmpty(),calories))
                     adapter.notifyItemInserted(dataList.size-1)
+                    updateTotalCalories()
                 }
             }
         }
@@ -163,6 +168,22 @@ class Food : Fragment() {
             val dataClass = DataClass(titleList[i])
             dataList.add(dataClass)
         }
+    }
+    private fun calculateTotalCalories(): Int {
+        var totalCalories = 0
+
+        for (data in dataList) {
+            val calculatedCalories = if (data.dataTitle != "") {
+                (data.calories * 0.01 * data.dataTitle.toInt()).toInt()
+            } else {
+                data.calories
+            }
+            totalCalories += calculatedCalories
+        }
+        return totalCalories
+    }
+    private fun updateTotalCalories() {
+        binding.todaycalories.text = calculateTotalCalories().toString()
     }
 
     override fun onDestroyView(){
