@@ -96,6 +96,7 @@ class Food : Fragment() {
 
         recyclerView.adapter = adapter
         binding.todaycalories.text = "${calculateTotalCalories()}"
+        binding.leftcalories.text=(2500 - calculateTotalCalories()).toString()
         updateTotalCalories()
 
 
@@ -184,6 +185,7 @@ class Food : Fragment() {
     }
     private fun updateTotalCalories() {
         binding.todaycalories.text = calculateTotalCalories().toString()
+        binding.leftcalories.text=(2500 - calculateTotalCalories()).toString()
     }
 
     override fun onDestroyView(){
