@@ -109,6 +109,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.32" />
+
     <TextView
         android:id="@+id/extracalories"
         android:layout_width="wrap_content"
